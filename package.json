@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "proxy": ["http://localhost:5000", "3.75.158.163", "3.125.183.140", "35.157.117.28" ],
+  "proxy": "http://localhost:5000, 3.75.158.163, 3.125.183.140, 35.157.117.28" ,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
