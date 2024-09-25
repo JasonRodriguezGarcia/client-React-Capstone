@@ -1,0 +1,5 @@
+.image-uploaders {
+    display: grid;
+    grid-gap: 21px;
+    grid-template-columns: 200px;
+  }
