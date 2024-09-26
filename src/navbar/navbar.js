@@ -24,41 +24,42 @@ openMenu() {
     <nav id="menu">
         {/* <!-- start menu --> */}
         <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="#">Administrator</a>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="#">Administrator</Link>
             {/* <!-- start menu desplegable --> */}
+            {/* <Link to="/home" className="title"> */}
                 <ul>
-                    <li><a href="/ListWorkers">Workers</a></li>
-                    <li><a href="/ListEnterprises">Enterprises</a></li>
-                    <li><a href="/ListOffers">Job offers</a></li>
+                    <li><Link to="/ListWorkers">Workers</Link></li>
+                    <li><Link to="/ListEnterprises">Enterprises</Link></li>
+                    <li><Link to="/ListOffers">Job offers</Link></li>
                 </ul>
         {/* <!-- end menu desplegable --> */}
             </li>
-            <li><a href="#">Worker</a> 
+            <li><Link to="#">Worker</Link> 
             {/* <!-- start menu desplegable --> AÑADIDO*/}
                 <ul>
-                    <li><a href="#">Modify personal data</a></li>
-                    <li><a href="#">Query offers</a></li>
-                    <li><a href="#">Others..</a>
+                    <li><Link to="#">Modify personal data</Link></li>
+                    <li><Link to="#">Query offers</Link></li>
+                    <li><Link to="#">Others..</Link>
                     </li>
                 </ul>
             </li>
-            <li><a href="#">Enterprise</a>
+            <li><Link to="#">Enterprise</Link>
                 <ul>
-                    <li><a href="#">Modify enterprise data</a></li>
-                    <li><a href="#">Job offers</a></li>
-                    <li><a href="#">Others..</a>
+                    <li><Link to="#">Modify enterprise data</Link></li>
+                    <li><Link to="#">Job offers</Link></li>
+                    <li><Link to="#">Others..</Link>
                         <ul>
-                            <li><a href="#">;) Bankruptcy</a></li>
-                            <li><a href="#">;) Misappropriation</a></li>
-                            <li><a href="#">;) Blackmail</a></li>
+                            <li><Link to="#">;) Bankruptcy</Link></li>
+                            <li><Link to="#">;) Misappropriation</Link></li>
+                            <li><Link to="#">;) Blackmail</Link></li>
                         </ul>
                     </li>
                 </ul>
             </li>
-            <li><a href="/about">About us</a></li>
-            <li><a href="#">Login</a></li>
-            <li><a href="#">Sign-up</a></li>
+            <li><Link to="/about">About us</Link></li>
+            <li><Link to="#">Login</Link></li>
+            <li><Link to="#">Sign-up</Link></li>
         </ul>
         {/* <!-- end menu --> */}
     </nav>
