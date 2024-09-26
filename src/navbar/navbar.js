@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./navbar.css";
+import { Link } from "react-router-dom";
 
 // export const Navbar = () => {
 //   const [menuOpen, setMenuOpen] = useState(false);
