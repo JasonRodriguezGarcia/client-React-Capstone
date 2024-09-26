@@ -18,7 +18,8 @@ export default class ListWorkers extends Component {
         workerItems: [],
         isLoading: true,
         apiAction: "POST",
-        apiUrl: "http://127.0.0.1:5000/get_listworkers",
+        apiUrl: "https://flask-server-capstone.onrender.com/get_listworkers",
+        // apiUrl: "http://127.0.0.1:5000/get_listworkers",
         isSpinnerLoading: true,
       };
 
