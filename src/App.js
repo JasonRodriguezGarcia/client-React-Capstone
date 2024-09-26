@@ -15,6 +15,10 @@ import Navbar from "./navbar/navbar"
 export default class App extends Component {
     constructor() {
         super();
+
+        this.state = {
+            hostAPP: "https://flask-server-capstone.onrender.com"
+        };
     }
     render() {
         return (
@@ -26,27 +30,27 @@ export default class App extends Component {
                 <BrowserRouter>
                     <Navbar />
                     <Routes>
-                        <Route path="/" element={<Home />}
+                        <Route path="/" element={<Home hostAPP = {this.state.hostAPP}/>}
                         />
-                        <Route path="/about" element={<About />}
+                        <Route path="/about" element={<About hostAPP = {this.state.hostAPP}/>}
                         />
-                        <Route path="/ListWorkers" element={<ListWorkers />}
+                        <Route path="/ListWorkers" element={<ListWorkers hostAPP = {this.state.hostAPP}/>}
                         />
-                        <Route path="/addworker" element={<CreateEditWorker workerEditMode = {false}/>} 
+                        <Route path="/addworker" element={<CreateEditWorker workerEditMode = {false} hostAPP = {this.state.hostAPP}/>} 
                         />
-                        <Route path="/editworker/:id" element={<CreateEditWorker workerEditMode = {true}/>} 
+                        <Route path="/editworker/:id" element={<CreateEditWorker workerEditMode = {true} hostAPP = {this.state.hostAPP}/>} 
                         />
-                        <Route path="/ListEnterprises" element={<ListEnterprises />}
+                        <Route path="/ListEnterprises" element={<ListEnterprises hostAPP = {this.state.hostAPP}/>}
                         />
-                        <Route path="/addenterprise" element={<CreateEditEnterprise enterpriseEditMode = {false}/>} 
+                        <Route path="/addenterprise" element={<CreateEditEnterprise enterpriseEditMode = {false} hostAPP = {this.state.hostAPP}/>} 
                         />
-                        <Route path="/editenterprise/:id" element={<CreateEditEnterprise enterpriseEditMode = {true}/>} 
+                        <Route path="/editenterprise/:id" element={<CreateEditEnterprise enterpriseEditMode = {true} hostAPP = {this.state.hostAPP}/>} 
                         />
-                        <Route path="/ListOffers" element={<ListOffers />}
+                        <Route path="/ListOffers" element={<ListOffers hostAPP = {this.state.hostAPP}/>}
                         />
-                        <Route path="/addoffer" element={<LauncherOffer offerEditMode = {false}/>} 
+                        <Route path="/addoffer" element={<LauncherOffer offerEditMode = {false} hostAPP = {this.state.hostAPP}/>} 
                         />
-                        <Route path="/editoffer/:id" element={<LauncherOffer offerEditMode = {true}/>} 
+                        <Route path="/editoffer/:id" element={<LauncherOffer offerEditMode = {true} hostAPP = {this.state.hostAPP}/>} 
                         />
                     </Routes>
                 </BrowserRouter>

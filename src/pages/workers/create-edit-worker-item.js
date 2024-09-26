@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {Link} from 'react-router-dom';
 import axios from "axios";
+import withRouter from '../../hooks/withRouter'; // mooded withRouter hook to work in Class 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilePdf } from "@fortawesome/free-solid-svg-icons";
 import DatePicker from "react-datepicker";
@@ -19,13 +20,14 @@ registerLocale('es', es)    // DatePicker config
 //         -level subform
 //     - SEND EMAIL when worker is created using this.state.newId
 
-export default class CreateEditWorkerItem extends Component {
+class CreateEditWorkerItem extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             apiAction: "POST",
-            apiUrl: "http://127.0.0.1:5000/addworker",
+            apiUrl: this.props.hostAPP+"/addworker",
+            // apiUrl: "http://127.0.0.1:5000/addworker",
             id: 0,
             // in the future add lenght variable for each field for maxlength in Form input
             nombre: "",
@@ -260,7 +262,8 @@ componentDidUpdate () {
             lopd: lopd,
             ocupaciones: ocupaciones,
             formaciones: formaciones,
-            apiUrl: `http://127.0.0.1:5000/editworker/${this.props.editedId}`,
+            apiUrl: this.props.hostAPP+`/editworker/${this.props.editedId}`,
+            // apiUrl: `http://127.0.0.1:5000/editworker/${this.props.editedId}`,
             curriculumIconEnabled: true,
             initialEditData: true,
         });
@@ -457,7 +460,8 @@ checkDOIExist(doiToCheck) {
     console.log("imprimo doiToCheck: ", doiToCheck);
     axios({
         method: "POST",
-        url: `http://127.0.0.1:5000//check_doiexist/"${doiToCheck.target.value}"`,
+        url: this.props.hostAPP+`/check_doiexist/"${doiToCheck.target.value}"`,
+        // url: `http://127.0.0.1:5000//check_doiexist/"${doiToCheck.target.value}"`,
         withCredentials: false
     })
     .then(response => {
@@ -693,3 +697,4 @@ render() {
     }
 };
 
+export default withRouter(CreateEditWorkerItem);

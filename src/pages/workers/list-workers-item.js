@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import withRouter from '../../hooks/withRouter'; // mooded withRouter hook to work in Class 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
@@ -23,7 +24,8 @@ const ListWorkersItem = props => {
         if (opcion === true) {
             axios({
                 method: 'DELETE',
-                url: `http://127.0.0.1:5000/deleteworker/${id}`,
+                url: this.props.hostAPP+`/deleteworker/${id}`,
+                // url: `http://127.0.0.1:5000/deleteworker/${id}`,
                 withCredentials: false
                 })
                 .then(response => {
@@ -65,4 +67,4 @@ const ListWorkersItem = props => {
     )
 }
   
-export default ListWorkersItem;
+export default withRouter(ListWorkersItem);

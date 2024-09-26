@@ -2,15 +2,17 @@
 import React, { Component } from "react";
 import {Link} from 'react-router-dom';
 import axios from "axios";
+import withRouter from '../../hooks/withRouter'; // mooded withRouter hook to work in Class 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+
 
 import ListWorkersItem from "./list-workers-item";
 
 // TODO
 //     - improve spinner to allow pagination
 
-export default class ListWorkers extends Component {
+class ListWorkers extends Component {
     constructor(props) {
       super(props);
   
@@ -18,7 +20,7 @@ export default class ListWorkers extends Component {
         workerItems: [],
         isLoading: true,
         apiAction: "POST",
-        apiUrl: "https://flask-server-capstone.onrender.com/get_listworkers",
+        apiUrl: this.props.hostAPP+"/get_listworkers",
         // apiUrl: "http://127.0.0.1:5000/get_listworkers",
         isSpinnerLoading: true,
       };
@@ -39,7 +41,8 @@ handleUpdateListWorkers(id) {
 getListWorkers() {  //WORKING OK retrieving data selection
     axios({
         method: this.state.apiAction,
-        url: this.state.apiUrl,
+        url: this.props.hostAPP+"/get_listworkers",
+        // url: this.state.apiUrl,
         data: {
             query: `SELECT * FROM trabajadores;`
         },
@@ -116,3 +119,4 @@ render() {
         );
     }
 }
+export default withRouter(ListWorkers);

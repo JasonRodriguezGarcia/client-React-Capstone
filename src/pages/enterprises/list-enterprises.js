@@ -12,8 +12,10 @@ class ListEnterprises extends Component {
         this.state = {
             enterpriseItems: [],
             isLoading: true,
-            apiAction: "POST",
-            apiUrl: "http://127.0.0.1:5000/get_listenterprises",
+            apiAction: "GET",
+            // apiAction: "POST",
+            apiUrl: this.props.hostAPP+"/get_listenterprises",
+            // apiUrl: "http://127.0.0.1:5000/get_listenterprises",
             isSpinnerLoading: true,
             };
     
