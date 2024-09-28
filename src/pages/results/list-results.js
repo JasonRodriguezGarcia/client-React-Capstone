@@ -27,23 +27,27 @@ class ListResults extends Component {
     }
 
 handleAptoClick(event, workerSelection) {
+    // debugger
     // console.log("imprimiendo evento:", event);
     // console.log("imprimo clase:", event.target.parentElement.classList)
     let myInnerText = event.target.parentElement.parentElement.children[0]
-    console.log("imprimo dato:", myInnerText);
     let myEventClass = event.target.parentElement.parentElement;
-    console.log("imprimo myEventClassValue:", myEventClass);
     let myRow = event.target.parentElement.parentElement.rowIndex;
-    console.log(myRow);
     if (myEventClass.className === workerSelection) {
         myEventClass.className = "table-light";
         myInnerText.innerHTML = "x";
-        this.state.offerResults[myRow-1].trabajador_estado = "x";
+        // this.state.offerResults[myRow-1].trabajador_estado = "x";
+        const newOfferResults = [...this.state.offerResults];
+        newOfferResults[myRow - 1].trabajador_estado = "x";
+        this.setState({ offerResults: newOfferResults });
         return;
     } else {
         myEventClass.className = workerSelection;
         myInnerText.innerHTML = workerSelection === "table-success" ? "apto": "no apto";
-        this.state.offerResults[myRow-1].trabajador_estado = workerSelection === "table-success" ? "apto" : "no apto";
+        const newOfferResults = [...this.state.offerResults];
+        newOfferResults[myRow - 1].trabajador_estado = workerSelection === "table-success" ? "apto" : "no apto";
+        this.setState({ offerResults: newOfferResults });
+        // this.state.offerResults[myRow-1].trabajador_estado = workerSelection === "table-success" ? "apto" : "no apto";
     }
 }
 
@@ -118,29 +122,20 @@ createCriteria() {
     if (this.props.offerItem.priorityField1){
         stringCriteria += ` trabajadores_ocupaciones.trabajadores_ocupaciones_id_ocupacion = 
                             ${this.props.offerItem.id_ocupacion} AND `;
-            // stringCriteria = stringCriteria.concat(" trabajadores_ocupaciones.trabajadores_ocupaciones_id_ocupacion = "+
-            //     this.props.offerItem.id_ocupacion+" AND ");
     }
     if (this.props.offerItem.priorityField2){
         stringCriteria += ` trabajadores_ocupaciones.trabajadores_ocupaciones_meses >= 
                             ${this.props.offerItem.meses_experiencia} AND `;
-            // stringCriteria = stringCriteria.concat(" trabajadores_ocupaciones.trabajadores_ocupaciones_meses >= "+
-            //     this.props.offerItem.meses_experiencia+" AND ");
     }
     if (this.props.offerItem.priorityField3){
         stringCriteria += ` trabajadores_formaciones.trabajadores_formaciones_id_formacion = 
                             ${this.props.offerItem.id_formacion} AND `;
-            // stringCriteria = stringCriteria.concat(" trabajadores_formaciones.trabajadores_formaciones_id_formacion = "+
-            //     this.props.offerItem.id_formacion+" AND ");
     }
     if (this.props.offerItem.priorityField4){
         stringCriteria += ` trabajadores.trabajadores_id_vehiculo = 
                             ${this.props.offerItem.id_vehiculo} AND `;
-            // stringCriteria = stringCriteria.concat(" trabajadores.trabajadores_id_vehiculo = "+
-            //     this.props.offerItem.id_vehiculo+" AND ");
     }
     stringCriteria += `trabajadores.trabajadores_id_situacion = 1`;
-// stringCriteria = stringCriteria.concat("trabajadores.trabajadores_id_situacion = 1");
 return stringCriteria
 }
 

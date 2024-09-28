@@ -18,12 +18,20 @@ class ListOffers extends Component {
             apiUrl: this.props.hostAPP + "/get_listoffers",
             // apiUrl: "http://127.0.0.1:5000/get_listoffers",
             isSpinnerLoading: true,
+            isTruncated: true,
+            maxLenght: 100,
             };
     
         this.getListOffers = this.getListOffers.bind(this);
         this.HandleDeleteRecord = this.HandleDeleteRecord.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
 
+handleClick() {
+    this.setState ({
+        isTruncated: !this.state.isTruncated
+    });
+}
 getListOffers() {
     axios({
         method: this.state.apiAction,
@@ -71,7 +79,7 @@ HandleDeleteRecord(dato) {
 };
 
 render() {
-
+    
     return (
         <>
         <Container>
@@ -122,7 +130,19 @@ render() {
                             <td>{dato.ofertas_id_vehiculo}</td>
                             <td>{dato.ofertas_id_municipio}</td>
                             <td>{dato.ofertas_id_provincia}</td>
-                            <td>{dato.ofertas_puesto_descripcion.substr(0,40)}</td>
+                            <td>{/* {dato.ofertas_puesto_descripcion.substr(0,40)} */}
+                                <div className="descripcion" onClick={this.handleClick}>
+
+                                    {this.state.isTruncated 
+                                        ? dato.ofertas_puesto_descripcion.substr(0, this.state.maxLenght)
+                                        : dato.ofertas_puesto_descripcion
+                                    }
+                                    {this.state.isTruncated
+                                        ? <span style={{color: "blue"}}>..Click to Expand...</span>
+                                        : <span style={{color: "blue"}}>..Click to Decrease...</span>
+                                    }
+                                </div>
+                            </td>
                             <td>{dato.ofertas_id_contrato}</td>
                             <td>{dato.ofertas_id_jornada}</td>
                             <td>{dato.ofertas_id_estado_oferta}</td>

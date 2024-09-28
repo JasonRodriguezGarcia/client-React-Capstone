@@ -17,7 +17,8 @@ export default class App extends Component {
         super();
 
         this.state = {
-            hostAPP: "https://flask-server-capstone.onrender.com"
+            hostAPP: "http://127.0.0.1:5000"
+            // hostAPP: "https://flask-server-capstone.onrender.com"
         };
     }
     render() {

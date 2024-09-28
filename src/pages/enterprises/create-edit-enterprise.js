@@ -3,7 +3,6 @@ import {Link} from 'react-router-dom';
 import axios from "axios";
 import withRouter from '../../hooks/withRouter'; // mooded withRouter hook to work in Class 
 import { Button, Col, Row, Form, FormGroup } from "reactstrap";
- 
 // BE CARE OF END LINE CLASS CREATEEDITENTERPRISE COMPONENT
 // TUNNED withRouter to allow using Router parameters
 class CreateEditEnterprise extends Component {
@@ -250,6 +249,7 @@ componentDidMount () {
                                 name="nombre"
                                 id="nombre"
                                 type="text"
+                                placeholder="Nombre empresa"
                                 required
                                 disabled={this.state.fieldDisabled}
                                 onChange={this.handleChange}
@@ -270,6 +270,7 @@ componentDidMount () {
                                 name="correo_electronico"
                                 id="correo_electronico"
                                 type="email"
+                                placeholder="ejemplo: test@test.com"
                                 required
                                 disabled={this.state.fieldDisabled}
                                 onChange={this.handleChange}
@@ -287,6 +288,7 @@ componentDidMount () {
                                 name="persona_contacto"
                                 id="persona_contacto"
                                 type="text"
+                                placeholder="nombre de la persona de contacto"
                                 required
                                 disabled={this.state.fieldDisabled}
                                 onChange={this.handleChange}
