@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import axios from "axios";
 import withRouter from '../../hooks/withRouter'; // mooded withRouter hook to work in Class 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusCircle, faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faSpinner, faPlusCircle, faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { Table, Container } from "reactstrap";
 
 class ListOffers extends Component {
@@ -15,7 +15,7 @@ class ListOffers extends Component {
             isLoading: true,
             apiAction: "GET",
             // apiAction: "POST",
-            apiUrl: this.props.hostAPP+"/get_listoffers",
+            apiUrl: this.props.hostAPP + "/get_listoffers",
             // apiUrl: "http://127.0.0.1:5000/get_listoffers",
             isSpinnerLoading: true,
             };
@@ -76,6 +76,17 @@ render() {
         <>
         <Container>
             {/* <br />  */}
+            {this.state.isSpinnerLoading ? (
+                                <div className="content-loader">
+                                    <FontAwesomeIcon icon={faSpinner}
+                                        style={{
+                                            fontSize: 40,
+                                            color: "blue"
+                                        }} 
+                                        spin
+                                    />
+                                </div>) : null
+            }
             <Link to="/addoffer" aria-label="addoffer" className="btn btn-success" title="Crear Oferta">
                 <FontAwesomeIcon icon={faPlusCircle} />
             </Link>

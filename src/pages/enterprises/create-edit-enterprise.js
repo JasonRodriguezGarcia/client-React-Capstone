@@ -11,9 +11,10 @@ class CreateEditEnterprise extends Component {
         super(props);
  
         this.state = {
-            apiUrl: "http://127.0.0.1:5000/addenterprise",
+            apiUrl: this.props.hostAPP+"/addenterprise",
+            // apiUrl: "http://127.0.0.1:5000/addenterprise",
             apiAction: "POST",
-            newId: [],
+            newId: "",
             editedId: this.props.params.id,
             enterpriseItem: [],
             form: {
@@ -28,7 +29,7 @@ class CreateEditEnterprise extends Component {
             headerText: ["Crear Empresa", "Modificar Empresa"], // headerText: ["Create User", "Edit User"],
             fieldDisabled: false,
             submitButtonEnabled: true,
-            initialEditData: false,         // to handle the first time data to edit in ocupations-workers
+            initialEditData: false,         // to handle the first time data to edit in enterprise
             repeatedCIF: "",
         };
         this.getEnterpriseItem = this.getEnterpriseItem.bind(this);
@@ -41,8 +42,9 @@ class CreateEditEnterprise extends Component {
     
 checkCIFExist(cifToCheck) {
     axios({
-        method: "POST",
-        url: `http://127.0.0.1:5000//check_cifexist/"${cifToCheck.target.value}"`,
+        method: "GET",
+        url: this.props.hostAPP+`/check_cifexist/"${cifToCheck.target.value}"`,
+        // url: `http://127.0.0.1:5000//check_cifexist/"${cifToCheck.target.value}"`,
         withCredentials: false
     })
     .then(response => {
@@ -53,7 +55,7 @@ checkCIFExist(cifToCheck) {
         });
     })
     .catch(error => {
-        console.log("retrieving getWorkerItem error");
+        console.log("retrieving CIF Item error");
     });
 }
     
@@ -79,7 +81,6 @@ handleSubmit(e) {
         });
         return null;
     }
-
     axios({
         method: this.state.apiAction,
         url: this.state.apiUrl,
@@ -90,21 +91,21 @@ handleSubmit(e) {
         withCredentials: false
     })
     .then(response => {
-        if (this.props.workerEditMode){
+        if (this.props.enterpriseEditMode){
             console.log("Data modified OK");
         } else {
             this.setState({
-                newId: response.data,
+                newId: response.data[0].id,
             });
             console.log(response.data);
             console.log("Data created OK");
         }
     })
     .catch(error => {
-        if (this.props.workerEditMode) {
-            return console.log("Worker Data MODIFICATION error");
+        if (this.props.enterpriseEditMode) {
+            return console.log("Enterprise Data MODIFICATION error");
         } else {
-            return console.log("Worder Data CREATION error");
+            return console.log("Enterprise Data CREATION error");
         }
     });
     this.setState ({
@@ -131,16 +132,16 @@ handleInitialEditDataOff() {
     
 getEnterpriseItem () {
     axios({
-        method: "POST",
-        url: `http://127.0.0.1:5000/get_listenterprises/${this.state.editedId}`,
+        method: "GET",
+        url: this.props.hostAPP+`/get_listenterprises/${this.state.editedId}`,
+        // url: `http://127.0.0.1:5000/get_listenterprises/${this.state.editedId}`,
         withCredentials: false
     })
     .then(response => {
         this.setState ({
             enterpriseItem: response.data,
             apiAction: "POST",
-            // apiUrl: `http://127.0.0.1:5000/get_user`,
-            apiUrl: `http://127.0.0.1:5000/editenterprise/${this.state.editedId}`,
+            apiUrl: this.props.hostAPP+`/editenterprise/${this.state.editedId}`,
             initialEditData: true,
         });
         console.log(response.data);
@@ -157,21 +158,23 @@ clearEnterpriseItem() {
     });
 }
 
-// componentWillUnmount() {
-//     if (this.props.workerEditMode) {
-//         console.log("ID Edited:")
-//         console.log(this.state.id);
-//     } else {
-//         console.log("ID created:")
-//         console.log(this.state.newId);
-//     }
+componentWillUnmount() {
+    if (this.props.enterpriseEditMode) {
+        console.log("ID Edited:")
+        console.log(this.state.form.id_empresa);
+        // console.log(this.state.id);
+    } else {
+        console.log("ID created:")
+        console.log(this.state.newId);
+        // console.log(this.state.newId);
+    }
 //     // alert("mandar sms");
 //     // TODO
 //     //  - SEND EMAIL using this.state.newId
-// }
+}
 
 componentDidUpdate () {
-    if (this.state.initialEditData) { // If we are Editing a Worker
+    if (this.state.initialEditData) { // If we are Editing a Enterprise
             // Adding Line id to work on Ocupations prop modal table, it allows do it¿? it's is supposed props are READ ONLY¿?
         this.handleInitialEditDataOff();
         console.log("pasando por componentDidUpdate");

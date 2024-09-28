@@ -65,7 +65,8 @@ populateResults(){
 saveResults() {
     axios({
         method: "POST",
-        url: `http://127.0.0.1:5000/save_offerresults/${this.props.offerId}`,
+        url: this.props.hostAPP + `/save_offerresults/${this.props.offerId}`,
+        // url: `http://127.0.0.1:5000/save_offerresults/${this.props.offerId}`,
         data: this.buildForm(),
         withCredentials: false
     })
@@ -88,9 +89,11 @@ generateResults() {
     axios({
         method: "POST",
         url: this.props.offerEditMode
-                ? `http://127.0.0.1:5000/generate_offerresults/${this.props.offerId}`
-                : `http://127.0.0.1:5000/generate_offerresults`
-        ,
+            ? this.props.hostAPP + `/generate_offerresults/${this.props.offerId}`
+            : this.props.hostAPP + `/generate_offerresults`
+        // ? `http://127.0.0.1:5000/generate_offerresults/${this.props.offerId}`
+        // : `http://127.0.0.1:5000/generate_offerresults`
+,
         data: {
             criteria: criterias,
             offerEditMode: this.props.offerEditMode
@@ -112,25 +115,33 @@ generateResults() {
 
 createCriteria() {
     var stringCriteria = ""; // Sting to fillup with criteria
-    debugger
     if (this.props.offerItem.priorityField1){
-        stringCriteria = stringCriteria.concat(" trabajadores_ocupaciones.trabajadores_ocupaciones_id_ocupacion = "+
-                            this.props.offerItem.id_ocupacion+" AND ");
+        stringCriteria += ` trabajadores_ocupaciones.trabajadores_ocupaciones_id_ocupacion = 
+                            ${this.props.offerItem.id_ocupacion} AND `;
+            // stringCriteria = stringCriteria.concat(" trabajadores_ocupaciones.trabajadores_ocupaciones_id_ocupacion = "+
+            //     this.props.offerItem.id_ocupacion+" AND ");
     }
     if (this.props.offerItem.priorityField2){
-        stringCriteria = stringCriteria.concat(" trabajadores_ocupaciones.trabajadores_ocupaciones_meses >= "+
-                            this.props.offerItem.meses_experiencia+" AND ");
+        stringCriteria += ` trabajadores_ocupaciones.trabajadores_ocupaciones_meses >= 
+                            ${this.props.offerItem.meses_experiencia} AND `;
+            // stringCriteria = stringCriteria.concat(" trabajadores_ocupaciones.trabajadores_ocupaciones_meses >= "+
+            //     this.props.offerItem.meses_experiencia+" AND ");
     }
     if (this.props.offerItem.priorityField3){
-        stringCriteria = stringCriteria.concat(" trabajadores_formaciones.trabajadores_formaciones_id_formacion = "+
-                            this.props.offerItem.id_formacion+" AND ");
+        stringCriteria += ` trabajadores_formaciones.trabajadores_formaciones_id_formacion = 
+                            ${this.props.offerItem.id_formacion} AND `;
+            // stringCriteria = stringCriteria.concat(" trabajadores_formaciones.trabajadores_formaciones_id_formacion = "+
+            //     this.props.offerItem.id_formacion+" AND ");
     }
     if (this.props.offerItem.priorityField4){
-        stringCriteria = stringCriteria.concat(" trabajadores.trabajadores_id_vehiculo = "+
-                            this.props.offerItem.id_vehiculo+" AND ");
+        stringCriteria += ` trabajadores.trabajadores_id_vehiculo = 
+                            ${this.props.offerItem.id_vehiculo} AND `;
+            // stringCriteria = stringCriteria.concat(" trabajadores.trabajadores_id_vehiculo = "+
+            //     this.props.offerItem.id_vehiculo+" AND ");
     }
-    stringCriteria = stringCriteria.concat("trabajadores.trabajadores_id_situacion = 1");
-    return stringCriteria
+    stringCriteria += `trabajadores.trabajadores_id_situacion = 1`;
+// stringCriteria = stringCriteria.concat("trabajadores.trabajadores_id_situacion = 1");
+return stringCriteria
 }
 
 componentDidMount(){

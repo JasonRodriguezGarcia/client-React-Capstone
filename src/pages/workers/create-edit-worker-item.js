@@ -26,7 +26,7 @@ class CreateEditWorkerItem extends Component {
 
         this.state = {
             apiAction: "POST",
-            apiUrl: this.props.hostAPP+"/addworker",
+            apiUrl: this.props.hostAPP + "/addworker",
             // apiUrl: "http://127.0.0.1:5000/addworker",
             id: 0,
             // in the future add lenght variable for each field for maxlength in Form input
@@ -262,7 +262,7 @@ componentDidUpdate () {
             lopd: lopd,
             ocupaciones: ocupaciones,
             formaciones: formaciones,
-            apiUrl: this.props.hostAPP+`/editworker/${this.props.editedId}`,
+            apiUrl: this.props.hostAPP + `/editworker/${this.props.editedId}`,
             // apiUrl: `http://127.0.0.1:5000/editworker/${this.props.editedId}`,
             curriculumIconEnabled: true,
             initialEditData: true,
@@ -459,8 +459,8 @@ handleChangeDate(date) {
 checkDOIExist(doiToCheck) {
     console.log("imprimo doiToCheck: ", doiToCheck);
     axios({
-        method: "POST",
-        url: this.props.hostAPP+`/check_doiexist/"${doiToCheck.target.value}"`,
+        method: "GET",
+        url: this.props.hostAPP + `/check_doiexist/"${doiToCheck.target.value}"`,
         // url: `http://127.0.0.1:5000//check_doiexist/"${doiToCheck.target.value}"`,
         withCredentials: false
     })

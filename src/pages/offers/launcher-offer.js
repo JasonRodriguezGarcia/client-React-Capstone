@@ -35,6 +35,7 @@ handleOfferId(id){  // Store the offer id to be use in searching criteria
             handleToggleComponent = {this.handleToggleComponent}
             handleOfferItem = {this.handleOfferItem}
             handleOfferId = {this.handleOfferId}
+            hostAPP = {this.props.hostAPP}
         />
       </div>
     )

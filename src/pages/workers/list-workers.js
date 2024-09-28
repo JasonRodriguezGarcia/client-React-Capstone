@@ -20,7 +20,7 @@ class ListWorkers extends Component {
         workerItems: [],
         isLoading: true,
         apiAction: "POST",
-        apiUrl: this.props.hostAPP+"/get_listworkers",
+        apiUrl: this.props.hostAPP + "/get_listworkers",
         // apiUrl: "http://127.0.0.1:5000/get_listworkers",
         isSpinnerLoading: true,
       };
@@ -41,7 +41,7 @@ handleUpdateListWorkers(id) {
 getListWorkers() {  //WORKING OK retrieving data selection
     axios({
         method: this.state.apiAction,
-        url: this.props.hostAPP+"/get_listworkers",
+        url: this.props.hostAPP + "/get_listworkers",
         // url: this.state.apiUrl,
         data: {
             query: `SELECT * FROM trabajadores;`
@@ -68,7 +68,8 @@ componentDidMount(){
 render() {
     const dataRecords = this.state.workerItems.map(workerItem => {
         return <ListWorkersItem key={workerItem.id} 
-                workerItem={workerItem} handleUpdateListWorkers = {this.handleUpdateListWorkers} />
+                workerItem={workerItem} handleUpdateListWorkers = {this.handleUpdateListWorkers}
+                hostAPP = {this.props.hostAPP} />
     });
 
         return (
@@ -84,6 +85,7 @@ render() {
                                             fontSize: 40,
                                             color: "blue"
                                         }} 
+                                        spin
                                     />
                                 </div>) : null
                             }

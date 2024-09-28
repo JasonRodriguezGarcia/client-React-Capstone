@@ -13,7 +13,8 @@ class CreateEditOffer extends Component {
         super(props);
  
         this.state = {
-            apiUrl: "http://127.0.0.1:5000/addoffer",
+            apiUrl: this.props.hostAPP + "/addoffer",
+            // apiUrl: "http://127.0.0.1:5000/addoffer",
             apiAction: "POST",
             // editedId: this.props.match.params.slug, <-- it ONLY WORKS IN ROUTER V.5
             editedId: this.props.params.id,
@@ -172,14 +173,16 @@ handleInitialEditDataOff() {
 getEnterpriseItem () {
     axios({
         method: "GET",
-        url: `http://127.0.0.1:5000/get_listoffers/${this.state.editedId}`,
+        url: this.props.hostAPP + `/get_listoffers/${this.state.editedId}`,
+        // url: `http://127.0.0.1:5000/get_listoffers/${this.state.editedId}`,
         withCredentials: false
     })
     .then(response => {
         this.setState ({
             enterpriseItem: response.data,
             apiAction: "POST",
-            apiUrl: `http://127.0.0.1:5000/editoffer/${this.state.editedId}`,
+            apiUrl: this.props.hostAPP + `/editoffer/${this.state.editedId}`,
+            // apiUrl: `http://127.0.0.1:5000/editoffer/${this.state.editedId}`,
             initialEditData: true,
         });
         this.props.handleOfferId(response.data[0].ofertas_id_oferta); // Passing id to parent component to be forwarded to list-results component
@@ -200,7 +203,8 @@ clearEnterpriseItem() {
 getOfferSecundaryData () {
     axios({
         method: "GET",
-        url: "http://127.0.0.1:5000/get_offer_secundary_databases",
+        url: this.props.hostAPP + "/get_offer_secundary_databases",
+        // url: "http://127.0.0.1:5000/get_offer_secundary_databases",
         withCredentials: false
     })
         .then(response => {
@@ -587,6 +591,9 @@ componentDidMount () {
                                 id="puesto_descripcion"
                                 type="textarea"
                                 rows={5}
+                                style={{
+                                    resize: "none"
+                                }}
                                 required
                                 disabled={this.state.fieldDisabled}
                                 onChange={this.handleChange}
@@ -653,6 +660,7 @@ componentDidMount () {
             </Form>
             {this.state.handleListResultsDisabled
                 ?<ListResults offerEditMode = {this.props.offerEditMode}
+                    hostAPP = {this.props.hostAPP}
                     offerId = {this.props.offerEditMode
                                 ? this.state.editedId
                                 : this.state.newId

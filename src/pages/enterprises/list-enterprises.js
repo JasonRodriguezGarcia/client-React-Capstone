@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import {Link} from 'react-router-dom';
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusCircle, faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faSpinner, faPlusCircle, faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { Table, Container } from "reactstrap";
 
 class ListEnterprises extends Component {
@@ -75,6 +75,17 @@ render() {
         <>
         <Container>
             {/* <br />  */}
+            {this.state.isSpinnerLoading ? (
+                                <div className="content-loader">
+                                    <FontAwesomeIcon icon={faSpinner}
+                                        style={{
+                                            fontSize: 40,
+                                            color: "blue"
+                                        }} 
+                                        spin
+                                    />
+                                </div>) : null
+            }
             <Link to="/addenterprise" aria-label="addenterprise" className="btn btn-success" title="Crear Empresa">
                 <FontAwesomeIcon icon={faPlusCircle} />
             </Link>
