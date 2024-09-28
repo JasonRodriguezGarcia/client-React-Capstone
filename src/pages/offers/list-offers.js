@@ -138,8 +138,8 @@ render() {
                                         : dato.ofertas_puesto_descripcion
                                     }
                                     {this.state.isTruncated
-                                        ? <span style={{color: "blue"}}>..Click to Expand...</span>
-                                        : <span style={{color: "blue"}}>..Click to Decrease...</span>
+                                        ? <span style={{fontSize: "small", color: "blue"}}>..Click to Expand...</span>
+                                        : <span style={{fontSize: "small", color: "blue"}}>..Click to Decrease...</span>
                                     }
                                 </div>
                             </td>
