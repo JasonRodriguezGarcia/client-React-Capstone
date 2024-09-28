@@ -56,7 +56,7 @@ HandleDeleteRecord(dato) {
         });
         axios({
             method: "DELETE",
-            url: `/deleteenterprise/${dato.empresas_id_empresa}`,
+            url: this.props.hostAPP + `/deleteenterprise/${dato.empresas_id_empresa}`,
             withCredentials: false
         })
         .then(response => {
