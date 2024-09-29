@@ -70,21 +70,20 @@ HandleDeleteRecord(dato) {
 };
 
 render() {
-
     return (
         <>
         <Container>
             {/* <br />  */}
             {this.state.isSpinnerLoading ? (
-                                <div className="content-loader">
-                                    <FontAwesomeIcon icon={faSpinner}
-                                        style={{
-                                            fontSize: 40,
-                                            color: "blue"
-                                        }} 
-                                        spin
-                                    />
-                                </div>) : null
+                <div className="content-loader">
+                    <FontAwesomeIcon icon={faSpinner}
+                        style={{
+                            fontSize: 40,
+                            color: "blue"
+                        }} 
+                        spin
+                    />
+                </div>) : null
             }
             <Link to="/addenterprise" aria-label="addenterprise" className="btn btn-success" title="Crear Empresa">
                 <FontAwesomeIcon icon={faPlusCircle} />

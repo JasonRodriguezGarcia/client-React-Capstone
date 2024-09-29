@@ -1,11 +1,7 @@
-// import React, {useState, useEffect} from 'react'
 import React, { Component } from "react";
 import imageHome from "../../assets/home.jpg";
 
 export default class Home extends Component { // props are like parameters
-    // constructor() {
-    // super();
-    // }
     render() {
         const myStyle = {
             backgroundImage:

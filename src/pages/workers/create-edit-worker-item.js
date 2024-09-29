@@ -660,15 +660,18 @@ render() {
                             </div>
                             <div className="col">
                                 <fieldset>Aceptación 
-                                    <a onClick={() => {this.viewPdfFile(PdftoView)} }
+                                {/* <a onClick={() => {this.viewPdfFile(PdftoView)} } */}
+                                <button onClick={() => {this.viewPdfFile(PdftoView)} }
                                     style={{ 
                                         fontweight: "900",
                                         color: "blue",
                                         cursor: "pointer",
+                                        border: "none",
+                                        background: "white"
                                     }}
                                     >
                                         &nbsp;<u><b>L.O.P.D</b></u>
-                                    </a>
+                                </button>
                                     &nbsp;(click en el recuadro)
                                 </fieldset>
                                     <input type="checkbox" name="lopd" id="lopd" checked={this.state.lopd} 

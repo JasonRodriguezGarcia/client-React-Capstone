@@ -11,6 +11,7 @@ import CreateEditEnterprise from "./pages/enterprises/create-edit-enterprise";
 import ListOffers from "./pages/offers/list-offers";
 import LauncherOffer from "./pages/offers/launcher-offer";
 import Navbar from "./navbar/navbar"
+import SignUp from "./pages/navigation/signup";
 
 export default class App extends Component {
     constructor() {
@@ -33,7 +34,9 @@ export default class App extends Component {
                     <Routes>
                         <Route path="/" element={<Home hostAPP = {this.state.hostAPP}/>}
                         />
-                        <Route path="/about" element={<About hostAPP = {this.state.hostAPP}/>}
+                        <Route path="/about" element={<About />}
+                        />
+                        <Route path="/signUp" element={<SignUp />}
                         />
                         <Route path="/ListWorkers" element={<ListWorkers hostAPP = {this.state.hostAPP}/>}
                         />

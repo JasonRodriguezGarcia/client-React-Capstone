@@ -1,0 +1,53 @@
+.body {
+    background-color: #bfe5ef;
+    /* font-family: 'Times New Roman', Times, serif; */
+    font-family: "Cambria", "Cochin", Georgia, Times, 'Times New Roman', serif;
+    font-size: 20px;
+}
+h1 {
+    border: 2px solid;
+    border-radius: 15px;
+    text-align: center;
+    padding: 10px;
+    width: 600px;
+    margin: auto;
+}
+p, ol, ul, li {
+    /* font-family: 'Times New Roman', Times, serif; */
+    font-size: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+img {
+    width: 300px;
+    height: 200px;
+    margin: 5px;
+    border-radius: 15px;
+}
+img:hover {
+    transition: 0.3s;
+    transform: scale(1.2);
+}
+.workercontainerimages, .enterprisescontainerimages {
+    /* border: 1px solid; */
+    text-align: center;
+}
+
+.iconWorkerEnterprise{
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 40px;
+}
+h2{
+    display: inline;
+    margin-left: 20px;
+    vertical-align: middle;
+    border-bottom: 2px solid;
+}
+.introduction, .main {
+    margin: 50px;
+}
+.iconyoutube {
+    width: 50px;
+    height: 50px;
+}

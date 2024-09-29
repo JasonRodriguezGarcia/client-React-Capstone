@@ -124,12 +124,18 @@ render() {
                     {this.state.offerItems.map((dato) => (
                         <tr key={dato.ofertas_id_oferta}> 
                             <td>{dato.ofertas_id_oferta}</td> 
-                            <td>{dato.ofertas_id_empresa}</td>
-                            <td>{dato.ofertas_id_ocupacion}</td>
-                            <td>{dato.ofertas_id_formacion}</td>
-                            <td>{dato.ofertas_id_vehiculo}</td>
-                            <td>{dato.ofertas_id_municipio}</td>
-                            <td>{dato.ofertas_id_provincia}</td>
+                            <td>{dato.empresas_nombre}</td>
+                            {/* <td>{dato.ofertas_id_empresa}</td> */}
+                            <td>{dato.ocupaciones_descripcion_ocupacion}</td>
+                            {/* <td>{dato.ofertas_id_ocupacion}</td> */}
+                            <td>{dato.formaciones_descripcion_formacion}</td>
+                            {/* <td>{dato.ofertas_id_formacion}</td> */}
+                            <td>{dato.vehiculos_descripcion_vehiculo}</td>
+                            {/* <td>{dato.ofertas_id_vehiculo}</td> */}
+                            <td>{dato.municipios_descripcion_municipio}</td>
+                            {/* <td>{dato.ofertas_id_municipio}</td> */}
+                            <td>{dato.provincias_descripcion_provincia}</td>
+                            {/* <td>{dato.ofertas_id_provincia}</td> */}
                             <td>{/* {dato.ofertas_puesto_descripcion.substr(0,40)} */}
                                 <div className="descripcion" onClick={this.handleClick}>
 
@@ -143,8 +149,10 @@ render() {
                                     }
                                 </div>
                             </td>
-                            <td>{dato.ofertas_id_contrato}</td>
-                            <td>{dato.ofertas_id_jornada}</td>
+                            <td>{dato.contratos_descripcion_contrato}</td>
+                            {/* <td>{dato.ofertas_id_contrato}</td> */}
+                            <td>{dato.jornadas_descripcion_jornada}</td>
+                            {/* <td>{dato.ofertas_id_jornada}</td> */}
                             <td>{dato.ofertas_id_estado_oferta}</td>
                             <td>{dato.ofertas_fecha_creacion}</td>
                             <td>{dato.ofertas_fecha_finalizacion}</td>

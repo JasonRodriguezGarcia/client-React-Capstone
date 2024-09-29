@@ -63,10 +63,11 @@ populateResults(){
     this.state.offerResults.forEach((result) => {
         result.id_oferta = this.props.offerId // TO BE USE IN EDIT MODE CASE
     });
-    console.log("imprimo result tuneado:", this.state.offerResults);
+    // console.log("imprimo result tuneado:", this.state.offerResults);
 }
 
 saveResults() {
+    // Saving results
     axios({
         method: "POST",
         url: this.props.hostAPP + `/save_offerresults/${this.props.offerId}`,
@@ -88,6 +89,11 @@ saveResults() {
 }
 
 generateResults() {
+    // Generating Results with criteria string
+    // If modifying a offer, current data in offer will never dissapear to allow list for selection
+    // New results could appear when changing criteria.
+    // Also offer worker state (Suitable-Unfit) could be changed to allow worker selection in the future.
+    // Hire button still under development
     var criterias = this.createCriteria();
     console.log(criterias);
     axios({
@@ -140,7 +146,7 @@ return stringCriteria
 }
 
 componentDidMount(){
-    // Generating Results
+    // Generating Results to parse in Modal
     this.generateResults(this.props.offerEditMode); //offerEditMode still not in use
 }
 

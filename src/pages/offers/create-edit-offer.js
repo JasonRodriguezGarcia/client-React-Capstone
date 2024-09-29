@@ -106,7 +106,6 @@ buildForm() {
 handleSubmit(e) {
     // console.log(e);
     e.preventDefault();
-    console.log("imprimo priorityFields")
     if (this.state.form.priorityField1 === false && this.state.form.priorityField2 === false &&
             this.state.form.priorityField3 === false && this.state.form.priorityField4 === false){
         window.alert("Seleccionar al menos un campo prioritario para la búsqueda");

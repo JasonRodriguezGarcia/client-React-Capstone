@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "./navbar.css";
 import { Link } from "react-router-dom";
-
 // export const Navbar = () => {
 //   const [menuOpen, setMenuOpen] = useState(false);
 class Navbar extends Component {
@@ -60,7 +59,7 @@ openMenu() {
             </li>
             <li><Link to="/about">About us</Link></li>
             <li><Link to="#">Login</Link></li>
-            <li><Link to="#">Sign-up</Link></li>
+            <li><Link to="/signup">Sign-up</Link></li>
         </ul>
         {/* <!-- end menu --> */}
     </nav>
