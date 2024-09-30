@@ -14,7 +14,6 @@ class CreateEditOffer extends Component {
  
         this.state = {
             apiUrl: this.props.hostAPP + "/addoffer",
-            // apiUrl: "http://127.0.0.1:5000/addoffer",
             apiAction: "POST",
             // editedId: this.props.match.params.slug, <-- it ONLY WORKS IN ROUTER V.5
             editedId: this.props.params.id,
@@ -173,7 +172,6 @@ getEnterpriseItem () {
     axios({
         method: "GET",
         url: this.props.hostAPP + `/get_listoffers/${this.state.editedId}`,
-        // url: `http://127.0.0.1:5000/get_listoffers/${this.state.editedId}`,
         withCredentials: false
     })
     .then(response => {
@@ -181,7 +179,6 @@ getEnterpriseItem () {
             enterpriseItem: response.data,
             apiAction: "POST",
             apiUrl: this.props.hostAPP + `/editoffer/${this.state.editedId}`,
-            // apiUrl: `http://127.0.0.1:5000/editoffer/${this.state.editedId}`,
             initialEditData: true,
         });
         this.props.handleOfferId(response.data[0].ofertas_id_oferta); // Passing id to parent component to be forwarded to list-results component
@@ -203,7 +200,6 @@ getOfferSecundaryData () {
     axios({
         method: "GET",
         url: this.props.hostAPP + "/get_offer_secundary_databases",
-        // url: "http://127.0.0.1:5000/get_offer_secundary_databases",
         withCredentials: false
     })
         .then(response => {
@@ -218,8 +214,6 @@ getOfferSecundaryData () {
                 jornadasData: response.data.jornadas,
                 estadosOfertasData: response.data.estados_ofertas,
             });
-            // console.log("Printing Offer secundary_datatabases response.data")
-            // console.log(response.data);
             console.log("Offer Secundary databases GET Data OK");
         })
         .catch(error => {
@@ -240,6 +234,7 @@ getOfferSecundaryData () {
 //     // TODO
 //     //  - SEND EMAIL using this.state.newId
 // }
+
 componentDidUpdate () {
     if (this.state.initialEditData) { // If we are Editing a Offer
         this.handleInitialEditDataOff();
@@ -644,12 +639,13 @@ componentDidMount () {
                     ?   <Button
                             color="primary"
                         >
-                            Guardar
+                            Save
+                            {/* Guardar */}
                         </Button>
 
                     :   (<div>
-                            <Link to="/" className="btn btn-success">Volver al menu principal</Link>
-                            {/* <Link to="/" className="btn btn-success">Back to main</Link> */}
+                            {/* <Link to="/" className="btn btn-success">Volver al menu principal</Link> */}
+                            <Link to="/" className="btn btn-success">Back to main</Link>
                             <div>DATA SAVED</div>
                         </div>)
                 }

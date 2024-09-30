@@ -1,6 +1,5 @@
 .body {
     background-color: #bfe5ef;
-    /* font-family: 'Times New Roman', Times, serif; */
     font-family: "Cambria", "Cochin", Georgia, Times, 'Times New Roman', serif;
     font-size: 20px;
 }
@@ -28,8 +27,7 @@ img:hover {
     transition: 0.3s;
     transform: scale(1.2);
 }
-.workercontainerimages, .enterprisescontainerimages {
-    /* border: 1px solid; */
+.workercontainerimagesvideos, .enterprisescontainerimagesvideos {
     text-align: center;
 }
 
@@ -46,8 +44,4 @@ h2{
 }
 .introduction, .main {
     margin: 50px;
-}
-.iconyoutube {
-    width: 50px;
-    height: 50px;
 }

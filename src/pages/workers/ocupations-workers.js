@@ -355,7 +355,8 @@ render() {
                     color="primary"
                     onClick={() => this.handleEditRecord(this.state.form)}
                 >
-                    Guardar
+                    Save
+                    {/* Guardar */}
                 </Button>
                 <Button
                     color="danger"
@@ -425,7 +426,8 @@ render() {
                     color="primary"
                     onClick={() => this.handleInsertRecord()}
                 >
-                    Guardar
+                    Save
+                    {/* Guardar */}
                 </Button>
                 <Button
                     className="btn btn-danger"

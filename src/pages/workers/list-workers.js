@@ -21,7 +21,6 @@ class ListWorkers extends Component {
         isLoading: true,
         apiAction: "POST",
         apiUrl: this.props.hostAPP + "/get_listworkers",
-        // apiUrl: "http://127.0.0.1:5000/get_listworkers",
         isSpinnerLoading: true,
       };
 
@@ -42,7 +41,6 @@ getListWorkers() {  //WORKING OK retrieving data selection
     axios({
         method: this.state.apiAction,
         url: this.props.hostAPP + "/get_listworkers",
-        // url: this.state.apiUrl,
         data: {
             query: `SELECT * FROM trabajadores;`
         },
@@ -74,7 +72,6 @@ render() {
 
         return (
             <div>
-                {/* <br/> */}
                 <div className="container h-100">
                     <div className="row h-100">
                         <div className="col-12">

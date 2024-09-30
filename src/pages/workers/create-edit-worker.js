@@ -11,7 +11,6 @@ class CreateEditWorker extends Component {
  
         this.state = {
             apiUrl: this.props.hostAPP+"/addworker", // may be uneeded¿?
-            // apiUrl: "http://127.0.0.1:5000/addworker",
             apiAction: "POST",
             newId: [],
             // editedId: this.props.match.params.slug, <-- it ONLY WORKS IN ROUTER V.5
@@ -34,7 +33,6 @@ getWorkerSecundaryData () {
     axios({
         method: "GET",
         url: this.props.hostAPP+"/get_worker_secundary_databases",
-        // url: "http://127.0.0.1:5000/get_worker_secundary_databases",
         withCredentials: false
     })
         .then(response => {
@@ -62,7 +60,6 @@ getWorkerItem () {
     axios({
         method: "POST",
         url: this.props.hostAPP+`/get_listworkers/${this.state.editedId}`,
-        // url: `http://127.0.0.1:5000/get_listworkers/${this.state.editedId}`,
         data: {
             query: `SELECT * FROM trabajadores WHERE trabajadores_id_trabajador=${this.state.editedId};`
         },
@@ -73,7 +70,6 @@ getWorkerItem () {
             workerItem: response.data,
             apiAction: "POST", // may be uneeded ¿?
             apiUrl: this.props.hostAPP+`/editworker/${this.state.editedId}`, // may be uneeded ¿?
-            // apiUrl: `http://127.0.0.1:5000/editworker/${this.state.editedId}`,
         });
         console.log(response.data);
         console.log("Retrieving getWorkerItem data Ok");

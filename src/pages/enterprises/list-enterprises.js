@@ -1,4 +1,3 @@
-// import React, {useState, useEffect} from 'react'
 import React, { Component } from "react";
 import {Link} from 'react-router-dom';
 import axios from "axios";
@@ -13,9 +12,7 @@ class ListEnterprises extends Component {
             enterpriseItems: [],
             isLoading: true,
             apiAction: "GET",
-            // apiAction: "POST",
             apiUrl: this.props.hostAPP+"/get_listenterprises",
-            // apiUrl: "http://127.0.0.1:5000/get_listenterprises",
             isSpinnerLoading: true,
             };
     
@@ -73,7 +70,6 @@ render() {
     return (
         <>
         <Container>
-            {/* <br />  */}
             {this.state.isSpinnerLoading ? (
                 <div className="content-loader">
                     <FontAwesomeIcon icon={faSpinner}

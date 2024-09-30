@@ -27,7 +27,6 @@
     font-size:15px;
     padding:2px 15px 2px 15px;
     font-family:"HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    /* text-transform:uppercase; */
     letter-spacing:1px;
    }
    
@@ -74,4 +73,8 @@
    
    #menu ul li:hover > ul {
     display:block;
+   }
+
+   #menu:hover, ul:hover, li:hover, a:hover {
+    border: none;
    }

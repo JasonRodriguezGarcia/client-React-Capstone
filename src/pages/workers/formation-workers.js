@@ -1,4 +1,3 @@
-// import React, {useState, useEffect} from 'react'
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
@@ -280,7 +279,8 @@ render() {
                     color="primary"
                     onClick={() => this.handleEditRecord(this.state.form)}
                 >
-                    Guardar
+                    Save
+                    {/* Guardar */}
                 </Button>
                 <Button
                     color="danger"
@@ -335,7 +335,8 @@ render() {
                     color="primary"
                     onClick={() => this.handleInsertRecord()}
                 >
-                    Guardar
+                    Save
+                    {/* Guardar */}
                 </Button>
                 <Button
                     className="btn btn-danger"

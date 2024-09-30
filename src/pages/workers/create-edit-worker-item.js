@@ -27,9 +27,7 @@ class CreateEditWorkerItem extends Component {
         this.state = {
             apiAction: "POST",
             apiUrl: this.props.hostAPP + "/addworker",
-            // apiUrl: "http://127.0.0.1:5000/addworker",
             id: 0,
-            // in the future add lenght variable for each field for maxlength in Form input
             nombre: "",
             apellidos: "",
             fecha_nacimiento: Moment(new Date()).format('YYYY-MM-DD'),
@@ -203,7 +201,7 @@ componentWillUnmount() {
         console.log("ID created:")
         console.log(this.state.newId);
     }
-    // alert("mandar sms");
+    // alert("send sms");
 }
 
 componentDidUpdate () {
@@ -263,7 +261,6 @@ componentDidUpdate () {
             ocupaciones: ocupaciones,
             formaciones: formaciones,
             apiUrl: this.props.hostAPP + `/editworker/${this.props.editedId}`,
-            // apiUrl: `http://127.0.0.1:5000/editworker/${this.props.editedId}`,
             curriculumIconEnabled: true,
             initialEditData: true,
         });
@@ -301,7 +298,6 @@ handleSubmit(event) {
     }
     var a = Moment(this.state.fecha_nacimiento).month(0).format('YYYY-MM-DD');
     var b = Moment(new Date()).format('YYYY-MM-DD');
-    // console.log(b.slice(0,4)-a.slice(0,4)); // printing years
     if ((b.slice(0,4)-a.slice(0,4)) < 45) {  // if less than 45 years old
         alert("Para poder dar de alta hay que tener por lo menos 45 años");
         return null;
@@ -461,7 +457,6 @@ checkDOIExist(doiToCheck) {
     axios({
         method: "GET",
         url: this.props.hostAPP + `/check_doiexist/"${doiToCheck.target.value}"`,
-        // url: `http://127.0.0.1:5000//check_doiexist/"${doiToCheck.target.value}"`,
         withCredentials: false
     })
     .then(response => {
@@ -568,7 +563,6 @@ render() {
                                 <input type="text" className="form-control" id="codigo_postal" name="codigo_postal" value={this.state.codigo_postal} 
                                     disabled={this.state.fieldDisabled} onChange={this.handleChange} 
                                     maxLength={5} placeholder="99999" pattern="[0-9]{5}" required={true}/>
-                                    {/* pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" */}
                             </div>
                             <div className="col">
                                 <label htmlFor="provincia">Provincia</label>
@@ -660,7 +654,6 @@ render() {
                             </div>
                             <div className="col">
                                 <fieldset>Aceptación 
-                                {/* <a onClick={() => {this.viewPdfFile(PdftoView)} } */}
                                 <button onClick={() => {this.viewPdfFile(PdftoView)} }
                                     style={{ 
                                         fontweight: "900",
@@ -686,7 +679,10 @@ render() {
                             </div>
                         </div>
                         {this.state.submitButtonEnabled // Action Text
-                            ?   <button type="submit" name="add" className="btn btn-primary">Guardar</button>
+                            ?   <button type="submit" name="add" className="btn btn-primary">
+                                    Save
+                                    {/* Guardar */}
+                                </button>
                             :   (<div>
                                     <Link to="/" className="btn btn-success">Back to main</Link>
                                     <div>DATA SAVED</div>

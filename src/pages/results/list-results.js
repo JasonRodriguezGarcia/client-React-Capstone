@@ -226,7 +226,8 @@ render() {
                     color="primary"
                     onClick={() => this.saveResults()}
                 >
-                    Guardar
+                    Save
+                    {/* Guardar */}
                 </Button>
                 {/* <div> */}
                     {/* <Link to="/" className="btn btn-success">Cancelar</Link> */}

@@ -1,4 +1,3 @@
-// import React, {useState, useEffect} from 'react'
 import React, { Component } from "react";
 import {Link} from 'react-router-dom';
 import axios from "axios";
@@ -14,9 +13,7 @@ class ListOffers extends Component {
             offerItems: [],
             isLoading: true,
             apiAction: "GET",
-            // apiAction: "POST",
             apiUrl: this.props.hostAPP + "/get_listoffers",
-            // apiUrl: "http://127.0.0.1:5000/get_listoffers",
             isSpinnerLoading: true,
             isTruncated: true,
             maxLenght: 100,
@@ -83,7 +80,6 @@ render() {
     return (
         <>
         <Container>
-            {/* <br />  */}
             {this.state.isSpinnerLoading ? (
                                 <div className="content-loader">
                                     <FontAwesomeIcon icon={faSpinner}
@@ -130,7 +126,7 @@ render() {
                             <td>{dato.vehiculos_descripcion_vehiculo}</td>
                             <td>{dato.municipios_descripcion_municipio}</td>
                             <td>{dato.provincias_descripcion_provincia}</td>
-                            <td>{/* {dato.ofertas_puesto_descripcion.substr(0,40)} */}
+                            <td>
                                 <div className="descripcion" onClick={this.handleClick}>
 
                                     {this.state.isTruncated 
@@ -144,9 +140,7 @@ render() {
                                 </div>
                             </td>
                             <td>{dato.contratos_descripcion_contrato}</td>
-                            {/* <td>{dato.ofertas_id_contrato}</td> */}
                             <td>{dato.jornadas_descripcion_jornada}</td>
-                            {/* <td>{dato.ofertas_id_jornada}</td> */}
                             <td>{dato.ofertas_id_estado_oferta}</td>
                             <td>{dato.ofertas_fecha_creacion}</td>
                             <td>{dato.ofertas_fecha_finalizacion}</td>

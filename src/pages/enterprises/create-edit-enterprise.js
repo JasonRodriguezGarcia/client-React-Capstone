@@ -11,7 +11,6 @@ class CreateEditEnterprise extends Component {
  
         this.state = {
             apiUrl: this.props.hostAPP+"/addenterprise",
-            // apiUrl: "http://127.0.0.1:5000/addenterprise",
             apiAction: "POST",
             newId: "",
             editedId: this.props.params.id,
@@ -43,7 +42,6 @@ checkCIFExist(cifToCheck) {
     axios({
         method: "GET",
         url: this.props.hostAPP+`/check_cifexist/"${cifToCheck.target.value}"`,
-        // url: `http://127.0.0.1:5000//check_cifexist/"${cifToCheck.target.value}"`,
         withCredentials: false
     })
     .then(response => {
@@ -133,7 +131,6 @@ getEnterpriseItem () {
     axios({
         method: "GET",
         url: this.props.hostAPP+`/get_listenterprises/${this.state.editedId}`,
-        // url: `http://127.0.0.1:5000/get_listenterprises/${this.state.editedId}`,
         withCredentials: false
     })
     .then(response => {
@@ -161,11 +158,9 @@ componentWillUnmount() {
     if (this.props.enterpriseEditMode) {
         console.log("ID Edited:")
         console.log(this.state.form.id_empresa);
-        // console.log(this.state.id);
     } else {
         console.log("ID created:")
         console.log(this.state.newId);
-        // console.log(this.state.newId);
     }
 //     // alert("mandar sms");
 //     // TODO
@@ -185,8 +180,6 @@ componentDidUpdate () {
             empresas_persona_contacto,
             empresas_telefono
             } = this.state.enterpriseItem[0];
-
-            // this.props.clearEnterpriseItem();
 
             this.setState({
                 form: { ...this.state.form,
@@ -230,7 +223,6 @@ componentDidMount () {
                                 minLength={9}
                                 placeholder="X99999999"
                                 required
-                                // disabled={this.state.fieldDisabled}
                                 disabled={(this.state.fieldDisabled && !this.props.enterpriseEditMode) ||
                                     this.props.enterpriseEditMode}
                                 onBlur={this.checkCIFExist}
@@ -319,10 +311,9 @@ componentDidMount () {
                 {this.state.submitButtonEnabled // Action Text
                     ?   <Button
                             color="primary"
-                            // onClick={() => this.handleSubmit(e)}
-                            // onSubmit={this.handleSubmit}
                         >
-                            Guardar
+                            Save
+                            {/* Guardar */}
                         </Button>
 
                     :   (<div>
