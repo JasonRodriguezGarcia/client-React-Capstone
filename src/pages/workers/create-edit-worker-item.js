@@ -154,17 +154,31 @@ handleUpdateOcupaciones(data, action) {
 
 viewCurriculumPDF() {
     // Retrieving filename and filedata
-    const i = this.state.curriculum.indexOf(',');
-    const viewFileName = this.state.curriculum.slice(0, i);
-    const viewFileData = this.state.curriculum.slice(i+30);
+    const index = this.state.curriculum.indexOf(',');
+    const viewFileName = this.state.curriculum.slice(0, index);
+    const viewFileData = this.state.curriculum.slice(index+30);
+    const pdfBlob =  'data:application/pdf;base64,'+ viewFileData
+    // Down load pdf file
     // Creating download environment
-    const linkSource = `data:application/pdf;base64,${viewFileData}`;
-    const downloadLink = document.createElement("a");
-    const fileName = viewFileName;
-    downloadLink.href = linkSource;
-    downloadLink.download = fileName;
-    downloadLink.click();
-    // this.viewPdfFile(viewFileData);
+    // const linkSource = `data:application/pdf;base64,${viewFileData}`;
+    // const downloadLink = document.createElement("a");
+    // const fileName = viewFileName;
+    // downloadLink.href = linkSource;
+    // downloadLink.download = fileName;
+    // downloadLink.click();
+
+    // Decode the base64 string to binary data
+    var binaryData = atob(viewFileData);
+    // Create a Uint8Array from the binary data
+    var byteArray = new Uint8Array(binaryData.length);
+    for (var i = 0; i < binaryData.length; i++) {
+        byteArray[i] = binaryData.charCodeAt(i) & 0xff;
+    }
+    var blob = new Blob([byteArray], {type: "application/pdf"});
+    //Build a URL from the file
+    const fileURL = URL.createObjectURL(blob);
+    //Open the URL on new Window
+    window.open(fileURL); 
 }
 
 async uploadFile(e) {
@@ -637,7 +651,7 @@ render() {
                                     <div className="pdf-link">
                                         {/* Curriculum icon is enabled if there is an attached file or is fieldDisabled = false */}
                                         {this.state.curriculumIconEnabled   // type="button" to avoid SUBMIT default behaviour
-                                            ?   <button type="button" id="buttonPDF" aria-label="buttonPDF" disabled={this.state.fieldDisabled} onClick={() => this.viewCurriculumPDF()}>
+                                            ?   <button  type="button" id="buttonPDF" aria-label="buttonPDF" disabled={this.state.fieldDisabled} onClick={() => this.viewCurriculumPDF()}>
                                                     <FontAwesomeIcon id="iconPDF" icon={faFilePdf} 
                                                         style={{
                                                             cursor: "pointer",
