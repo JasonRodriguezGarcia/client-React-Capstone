@@ -1,0 +1,47 @@
+  .autocomplete {
+    display: flex;
+    flex-direction: column;
+    /* min-height: 100vh; */
+    align-items: center;
+    justify-content: top;
+    /* padding-top: 100px; */
+  } 
+  
+  inputOcupations {
+    width: 300px;
+  }
+   
+  .autocomplete-results {
+/* display: none; */
+    width: 400px;
+    margin-top: -2px;
+    font-size: 0.8em;
+    color: black;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .ulSearch {
+    /* list-style-type: none; */
+    overflow-y: scroll;
+    height: 200px;
+  }
+    .autocomplete-results li {
+      margin: 0;
+      padding: 0;
+      padding: 10px 0 10px 10px;
+      border-right: 2px solid black;
+      border-bottom: 2px solid black;
+      border-left: 2px solid black;
+      font-size: 0.8em;
+    }
+  
+    .autocomplete-results li:hover {
+      /* background-color: #eee; */
+      /* color: blue; */
+        color: white;
+        background-color: grey;
+        cursor: pointer;
+    }
+  
+  

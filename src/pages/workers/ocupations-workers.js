@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle, faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { Table, Button, Container, Modal, ModalHeader, ModalBody, FormGroup, ModalFooter } from "reactstrap";
-
+import SearchOcupations from "./searchocupations";
 class OcupationsWorkers extends Component {
     constructor(props) {    // Receiving props from CreateEditWorker
       super(props); //  ocupaciones={this.state.ocupaciones}
@@ -16,10 +16,11 @@ class OcupationsWorkers extends Component {
             modalInsert: false,
             form: {
                 id: "",
-                id_ocupacion: "1",
+                id_ocupacion: "",
                 descripcion_ocupacion: "",
                 meses: "0",
             },
+            inputOcupationIncomplete: true, 
         };
       
         this.handleDeleteRecord = this.handleDeleteRecord.bind(this);
@@ -32,7 +33,26 @@ class OcupationsWorkers extends Component {
         this.newIdGenerator = this.newIdGenerator.bind(this);
         this.checkLength = this.checkLength.bind(this);
         this.validateValues = this.validateValues.bind(this);
+        this.handleOcupation = this.handleOcupation.bind(this); // update ocupation data from SearchOcupations component for submit validation
+        this.handleInputOcupationIncomplete = this.handleInputOcupationIncomplete.bind(this); // handle Ocupation data in SearchOcupations is not completed for submit validation
     }
+
+handleInputOcupationIncomplete(value) {
+    this.setState({
+        inputOcupationIncomplete: value
+    })
+}
+
+handleOcupation(descripcion, id) {
+    this.setState({
+        form: {
+        ...this.state.form,
+        descripcion_ocupacion: descripcion,
+        id_ocupacion: id
+        },
+    });
+
+}
 
 checkLength(e){
     // console.log(e);
@@ -50,7 +70,7 @@ checkLength(e){
             }
         }
         if(e.key === "Backspace" || e.key === "Delete") {
-            // console.log("backspace pulsado");
+            // console.log("backspace o delete pulsado");
             e.target.value = "";
         }    
         return false;
@@ -106,6 +126,11 @@ validateValues(inputValues) {
     if (repeated.length !== 0 && this.state.modalUpdate !== true) {
         return ("Ocupación ya existente");
     }
+    debugger
+    if (this.state.inputOcupationIncomplete && !this.props.workerEditMode) {
+        return ("Ocupacion incompleta");
+    }
+
     return "";
 }
 
@@ -125,8 +150,8 @@ showInsertModal() {
         modalInsert: true,
         form: {
             id: "",
-            id_ocupacion: "1",
-            descripcion_ocupacion: this.props.ocupacionesData[0].descripcion_ocupacion,
+            id_ocupacion: "",
+            descripcion_ocupacion: "",
             // años: "0",
             meses: "0",
         }
@@ -135,7 +160,7 @@ showInsertModal() {
 
 closeInsertModal() {
     this.setState({ modalInsert: false });
-};
+}
 
 newIdGenerator() {
     if (this.state.data.length >= 1) {
@@ -152,6 +177,7 @@ handleEditRecord(dato) {
         alert(errors);
         return ;
     }
+    debugger
     var counter = 0;
     var myArray = this.state.data;
     myArray.forEach((registro) => {
@@ -167,8 +193,9 @@ handleEditRecord(dato) {
     this.setState({
         form: {
             id: "",
-            id_ocupacion: "1",
-            descripcion_ocupacion: this.props.ocupacionesData[0].descripcion_ocupacion,
+            id_ocupacion: "",
+            descripcion_ocupacion: "",
+            // descripcion_ocupacion: this.props.ocupacionesData[0].descripcion_ocupacion,
             meses: "0",
         }
     });
@@ -192,14 +219,15 @@ handleInsertRecord() {
         alert(errors);
         return ;
     }
+    // debugger
     var newValue= {...this.state.form};
     // Allway override newValue.descripcion_ocupacion due to not possible 
     // to start state with props for initial value
-    if (this.state.data.length === 0 && this.state.form.id_ocupacion === "1") { // It is the first line introduced and id_ocupation was not changed
-        newValue.descripcion_ocupacion = this.props.ocupacionesData[0].descripcion_ocupacion
-    } else {
-        newValue.descripcion_ocupacion = this.props.ocupacionesData[newValue.id_ocupacion-1].descripcion_ocupacion
-    }
+    // if (this.state.data.length === 0 && this.state.form.id_ocupacion === "1") { // It is the first line introduced and id_ocupation was not changed
+    //     newValue.descripcion_ocupacion = this.props.ocupacionesData[0].descripcion_ocupacion
+    // } else {
+    //     newValue.descripcion_ocupacion = this.props.ocupacionesData[newValue.id_ocupacion-1].descripcion_ocupacion
+    // }
 
     newValue.id = this.newIdGenerator();
     var lista= this.state.data;
@@ -212,8 +240,8 @@ handleInsertRecord() {
     this.setState({
         form: {
             id: "",
-            id_ocupacion: "1",
-            descripcion_ocupacion: this.props.ocupacionesData[0].descripcion_ocupacion,
+            id_ocupacion: "",
+            descripcion_ocupacion: "",
             // años: "0",
             meses: "0",
         },
@@ -221,24 +249,24 @@ handleInsertRecord() {
 }
 
 handleChange(e) {
-    // console.log(e);
-    if (e.target.name === "id_ocupacion") {
-        // console.log(e);
-        this.setState({
-            form: {
-            ...this.state.form,
-            [e.target.name]: e.target.value,
-            descripcion_ocupacion: this.props.ocupacionesData[e.target.value-1].descripcion_ocupacion
-            }
-        });
-    } else {
+    // // console.log(e);
+    // if (e.target.name === "id_ocupacion") {
+    //     // console.log(e);
+    //     this.setState({
+    //         form: {
+    //         ...this.state.form,
+    //         [e.target.name]: e.target.value,
+    //         descripcion_ocupacion: this.props.ocupacionesData[e.target.value-1].descripcion_ocupacion
+    //         }
+    //     });
+    // } else {
         this.setState({
             form: {
             ...this.state.form,
             [e.target.name]: e.target.value,
             },
         });
-    }
+    // }
 }
 
 render() {
@@ -389,9 +417,16 @@ render() {
 
                 <FormGroup>
                     <label>
-                        Id_ocupacion: 
+                        Ocupacion: 
                     </label>
-                    <select
+                    <SearchOcupations ocupationsData = {this.props.ocupacionesData}
+                        handleOcupation = {this.handleOcupation}
+                        form = {this.state.form}
+                        // inputOcupationIncomplete = {this.state.inputOcupationIncomplete}
+                        handleInputOcupationIncomplete = {this.handleInputOcupationIncomplete}
+                        // form = {this.state.form}
+                    />
+                    {/* <select
                         className="form-control"
                         name="id_ocupacion"
                         type="number"
@@ -401,7 +436,7 @@ render() {
                         value={this.state.form.id_ocupacion}
                     >
                         {ocupaciones}
-                    </select>
+                    </select> */}
                 </FormGroup>
                 <FormGroup>
                     <label>

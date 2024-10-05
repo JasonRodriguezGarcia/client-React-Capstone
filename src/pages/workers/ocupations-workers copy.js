@@ -1,19 +1,24 @@
+// import React, {useState, useEffect} from 'react'
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusCircle, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faPlusCircle, faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { Table, Button, Container, Modal, ModalHeader, ModalBody, FormGroup, ModalFooter } from "reactstrap";
 
-class FormationsWorkers extends Component {
-    constructor(props) {
-      super(props); 
+class OcupationsWorkers extends Component {
+    constructor(props) {    // Receiving props from CreateEditWorker
+      super(props); //  ocupaciones={this.state.ocupaciones}
+                    //  ocupacionesData={this.props.ocupacionesData}
+                    //  fieldDisabled={this.state.fieldDisabled} to activate or deactivate modal
+  
         this.state = {
             data: [],
             modalUpdate: false,
             modalInsert: false,
             form: {
                 id: "",
-                id_formacion: "1",
-                descripcion_formacion: "",
+                id_ocupacion: "1",
+                descripcion_ocupacion: "",
+                meses: "0",
             },
         };
       
@@ -25,22 +30,52 @@ class FormationsWorkers extends Component {
         this.showUpdateModal = this.showUpdateModal.bind(this);
         this.closeInsertModal = this.closeInsertModal.bind(this);
         this.newIdGenerator = this.newIdGenerator.bind(this);
+        this.checkLength = this.checkLength.bind(this);
         this.validateValues = this.validateValues.bind(this);
     }
 
+checkLength(e){
+    // console.log(e);
+    if(e.target.value.length === e.target.maxLength && e.key !== "Tab") {
+        // console.log("maxlength alcanzado");
+        e.stopPropagation();
+        e.preventDefault();
+        if(e.key === "Tab") {
+            if (e.target.value === "") {
+                e.target.value = "0";
+            } else {
+                console.log("pulsado Tab");
+                console.log(e.stopPropagation);
+            return true;
+            }
+        }
+        if(e.key === "Backspace" || e.key === "Delete") {
+            // console.log("backspace pulsado");
+            e.target.value = "";
+        }    
+        return false;
+    }
+    if (e.target.value.length === 1 && (e.key === "Backspace" || e.key === "Delete")) {
+        e.target.value = "0";
+    }
+    if (parseInt(e.target.value) === 0) {
+        return false;
+    }
+    return true;
+}
 
 componentDidUpdate () {
     if (this.props.initialEditData) { // If we are Editing a Worker
-            // Adding Line id to work on Formations prop modal table, it allows do it¿? it's is supposed props are READ ONLY¿?
+            // Adding Line id to work on Ocupations prop modal table, it allows do it¿? it's is supposed props are READ ONLY¿?
         this.props.handleInitialEditDataOff();
         console.log("pasando por componentDidUpdate");
         var index = 0;
-        this.props.formaciones.forEach(formacion => {
-            formacion['id'] = index + 1;
+        this.props.ocupaciones.forEach(ocupacion => {
+            ocupacion['id'] = index + 1;
             index +=1;
         });
 
-        const data = this.props.formaciones; // Using in Edit Worker item Formaciones !!
+        const data = this.props.ocupaciones; // Using in Edit Worker item Ocupaciones !!
 //      Passing data from props to data state component
         this.setState({
             data: data
@@ -51,16 +86,25 @@ componentDidUpdate () {
 componentDidMount(){    
     console.log("pasando por componenDidMount");
     this.setState ({
-        data: this.props.formaciones
+        data: this.props.ocupaciones
     });
 }
 
 validateValues(inputValues) {
+    if (isNaN(parseInt(inputValues.meses))) {
+        return ("Introducir meses con un valor correcto.")
+    }
+    if (parseInt(inputValues.meses) < "0") {
+        return ("Valores meses no válido.")
+    }
+    if (inputValues.meses.length === 2 && inputValues.meses[0] === "0") {
+        return ("Valor introducido en meses no válido.")
+    }
     var repeated = this.state.data.filter(item => {
-        return item.id_formacion === inputValues.id_formacion;
+        return item.id_ocupacion === inputValues.id_ocupacion;
     });
     if (repeated.length !== 0 && this.state.modalUpdate !== true) {
-        return ("Formacion ya existente");
+        return ("Ocupación ya existente");
     }
     return "";
 }
@@ -81,10 +125,11 @@ showInsertModal() {
         modalInsert: true,
         form: {
             id: "",
-            id_formacion: "1",
-            descripcion_formacion: this.props.formacionesData[0].descripcion_formacion,
+            id_ocupacion: "1",
+            descripcion_ocupacion: this.props.ocupacionesData[0].descripcion_ocupacion,
+            // años: "0",
+            meses: "0",
         }
-
     });
 }
 
@@ -109,33 +154,35 @@ handleEditRecord(dato) {
     }
     var counter = 0;
     var myArray = this.state.data;
-    myArray.map((registro) => {
-        if (dato.id === registro.id) {
-            myArray[counter].id_formacion = dato.id_formacion;
-            myArray[counter].descripcion_formacion = this.props.formacionesData[dato.id_formacion+1];
+    myArray.forEach((registro) => {
+            if (dato.id === registro.id) {
+            myArray[counter].id_ocupacion = dato.id_ocupacion;
+            myArray[counter].descripcion_ocupacion = this.props.ocupacionesData[dato.id_ocupacion+1];
+            myArray[counter].meses = dato.meses;
         }
         counter+=1;
     });
     this.setState({ data: myArray, modalUpdate: false });
-    this.props.handleUpdateFormaciones(dato,"edit");
+    this.props.handleUpdateOcupaciones(dato,"edit");
     this.setState({
         form: {
             id: "",
-            id_formacion: "1",
-            descripcion_formacion: this.props.formacionesData[0].descripcion_formacion,
+            id_ocupacion: "1",
+            descripcion_ocupacion: this.props.ocupacionesData[0].descripcion_ocupacion,
+            meses: "0",
         }
     });
 };
 
 handleDeleteRecord(dato) {
-    var opcion = window.confirm("Estás seguro que deseas Eliminar la formación "+dato.descripcion_formacion);
+    var opcion = window.confirm("Estás seguro que deseas Eliminar la ocupacion "+dato.descripcion_ocupacion);
     if (opcion === true) {
         this.setState({
             data: this.state.data.filter(item => {
-            return item.id_formacion !== dato.id_formacion;
+            return item.id_ocupacion !== dato.id_ocupacion;
             })
         });
-        this.props.handleUpdateFormaciones(dato,"delete");
+        this.props.handleUpdateOcupaciones(dato,"delete");
     }
 };
 
@@ -146,12 +193,12 @@ handleInsertRecord() {
         return ;
     }
     var newValue= {...this.state.form};
-    // Allway override newValue.descripcion_formacion due to not possible 
+    // Allway override newValue.descripcion_ocupacion due to not possible 
     // to start state with props for initial value
-    if (this.state.data.length === 0 && this.state.form.id_formacion === "1") { // It is the first line introduced and id_formacion was not changed
-        newValue.descripcion_formacion = this.props.formacionesData[0].descripcion_formacion
+    if (this.state.data.length === 0 && this.state.form.id_ocupacion === "1") { // It is the first line introduced and id_ocupation was not changed
+        newValue.descripcion_ocupacion = this.props.ocupacionesData[0].descripcion_ocupacion
     } else {
-        newValue.descripcion_formacion = this.props.formacionesData[newValue.id_formacion-1].descripcion_formacion
+        newValue.descripcion_ocupacion = this.props.ocupacionesData[newValue.id_ocupacion-1].descripcion_ocupacion
     }
 
     newValue.id = this.newIdGenerator();
@@ -161,25 +208,27 @@ handleInsertRecord() {
         modalInsert: false,
         data: lista,
      });
-    this.props.handleUpdateFormaciones(lista,"insert");
+    this.props.handleUpdateOcupaciones(lista,"insert");
     this.setState({
         form: {
             id: "",
-            id_formacion: "1",
-            descripcion_formacion: this.props.formacionesData[0].descripcion_formacion,
+            id_ocupacion: "1",
+            descripcion_ocupacion: this.props.ocupacionesData[0].descripcion_ocupacion,
+            // años: "0",
+            meses: "0",
         },
     });
 }
 
 handleChange(e) {
     // console.log(e);
-    if (e.target.name === "id_formacion") {
-        console.log(e);
+    if (e.target.name === "id_ocupacion") {
+        // console.log(e);
         this.setState({
             form: {
             ...this.state.form,
             [e.target.name]: e.target.value,
-            descripcion_formacion: this.props.formacionesData[e.target.value-1].descripcion_formacion
+            descripcion_ocupacion: this.props.ocupacionesData[e.target.value-1].descripcion_ocupacion
             }
         });
     } else {
@@ -193,9 +242,9 @@ handleChange(e) {
 }
 
 render() {
-    const formaciones = this.props.formacionesData.map((formacion => {
+    const ocupaciones = this.props.ocupacionesData.map((ocupacion => {
         return ( 
-            <option key={formacion.id_formacion} value={formacion.id_formacion}>{formacion.descripcion_formacion} </option> 
+            <option key={ocupacion.id_ocupacion} value={ocupacion.id_ocupacion}>{ocupacion.descripcion_ocupacion} </option> 
         );
     }));
 
@@ -205,30 +254,40 @@ render() {
             <Button color="success" 
                 disabled={this.props.fieldDisabled}
                 onClick={()=>this.showInsertModal()}
-                title="Crear Formaciones"
+                title="Crear Ocupaciones"
+            // >Crear
             >
                 <FontAwesomeIcon icon={faPlusCircle} />
             </Button>
-            Formaciones
+            {/* Ocupations  */}
+            Ocupaciones
             <Table size="sm">
                 <thead>
                     <tr>
-                        <th>Formación</th>
+                        <th>Ocupacion</th>
+                        <th>Meses</th>
                         <th>Acción</th>
                     </tr>
                 </thead>
 
-                <tbody id="formationsTableRows">
+                <tbody id="ocupationsTableRows">
                     {this.state.data.map((dato) => (
                         <tr key={dato.id}>
-                            <td>{dato.descripcion_formacion}</td>
+                            <td>{dato.descripcion_ocupacion}</td>
+                            <td>{dato.meses}</td>
                             <td>
+                                <Button
+                                    color="primary"
+                                    disabled={this.props.fieldDisabled}
+                                    onClick={() => this.showUpdateModal(dato)}
+                                >
+                                    <FontAwesomeIcon icon={faEdit} />
+                                </Button>{" "}
                                 <Button 
                                     color="danger"
                                     disabled={this.props.fieldDisabled}
                                     onClick={()=> this.handleDeleteRecord(dato)}
                                 >
-                                    {/* Eliminar */}
                                     <FontAwesomeIcon icon={faTrashAlt} />
                                 </Button>
                             </td>
@@ -237,10 +296,10 @@ render() {
                 </tbody>
             </Table>
         </Container>
-            {/* Modal start with autofocus=false to allow autofocus in Id formacion */}
+            {/* Modal start with autofocus=false to allow autofocus in Id ocupacion */}
         <Modal autoFocus={false} isOpen={this.state.modalUpdate}>
             <ModalHeader>
-                <div><h3>Editar Formación</h3></div>
+                <div><h3>Editar Ocupación</h3></div>
             </ModalHeader>
   
             <ModalBody>
@@ -263,14 +322,31 @@ render() {
                     </label>
                     <select
                         className="form-control"
-                        name="id_formacion"
+                        name="id_ocupacion"
                         disabled={true}
                         type="text"
                         onChange={this.handleChange}
-                        value={this.state.form.id_formacion}
+                        value={this.state.form.id_ocupacion}
                     >
-                        {formaciones}
+                        {ocupaciones}
                     </select>
+                </FormGroup>
+                <FormGroup>
+                    <label>
+                        Meses: 
+                    </label>
+                    <input
+                        className="form-control"
+                        name="meses"
+                        type="text"
+                        maxLength={3}
+                        min={1} max={999}
+                        // defaultValue={0}
+                        required
+                        onKeyDown={e=>this.checkLength(e)}
+                        onChange={this.handleChange}
+                        value={this.state.form.meses}
+                    />
                 </FormGroup>
             </ModalBody>
   
@@ -291,10 +367,9 @@ render() {
             </ModalFooter>
         </Modal>
   
-            {/* Modal start with autofocus=false to allow autofocus in Id formacion */}
         <Modal autoFocus={false} isOpen={this.state.modalInsert}>
             <ModalHeader>
-                <div><h3>Insertar Formación</h3></div>
+                <div><h3>Insertar Ocupación</h3></div>
             </ModalHeader>
 
             <ModalBody>
@@ -314,19 +389,35 @@ render() {
 
                 <FormGroup>
                     <label>
-                        id_formacion: 
+                        Id_ocupacion: 
                     </label>
                     <select
                         className="form-control"
-                        name="id_formacion"
+                        name="id_ocupacion"
                         type="number"
                         autoFocus={true}
                         autoComplete="on"
                         onChange={this.handleChange}
-                        value={this.state.form.id_formacion}
+                        value={this.state.form.id_ocupacion}
                     >
-                        {formaciones}
+                        {ocupaciones}
                     </select>
+                </FormGroup>
+                <FormGroup>
+                    <label>
+                        Meses: 
+                    </label>
+                    <input
+                        className="form-control"
+                        name="meses"
+                        type="number"
+                        maxLength={3}
+                        min={1} max={999}
+                        required
+                        onKeyDown={e=>this.checkLength(e)}
+                        onChange={this.handleChange}
+                        value={this.state.form.meses}
+                    />
                 </FormGroup>
             </ModalBody>
 
@@ -351,4 +442,4 @@ render() {
     }
 }
 
-export default FormationsWorkers;
+export default OcupationsWorkers;
