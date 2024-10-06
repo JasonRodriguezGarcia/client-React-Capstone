@@ -335,6 +335,7 @@ handleSubmit(event) {
     })
     .then(response => {
         if (this.props.workerEditMode){
+            console.log(response.data);
             console.log("Data modified OK");
         } else {
             this.setState({

@@ -126,7 +126,6 @@ validateValues(inputValues) {
     if (repeated.length !== 0 && this.state.modalUpdate !== true) {
         return ("Ocupación ya existente");
     }
-    debugger
     if (this.state.inputOcupationIncomplete && !this.props.workerEditMode) {
         return ("Ocupacion incompleta");
     }
@@ -177,7 +176,6 @@ handleEditRecord(dato) {
         alert(errors);
         return ;
     }
-    debugger
     var counter = 0;
     var myArray = this.state.data;
     myArray.forEach((registro) => {
@@ -219,7 +217,6 @@ handleInsertRecord() {
         alert(errors);
         return ;
     }
-    // debugger
     var newValue= {...this.state.form};
     // Allway override newValue.descripcion_ocupacion due to not possible 
     // to start state with props for initial value

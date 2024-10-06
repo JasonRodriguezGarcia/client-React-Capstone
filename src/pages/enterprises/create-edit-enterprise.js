@@ -89,6 +89,7 @@ handleSubmit(e) {
     })
     .then(response => {
         if (this.props.enterpriseEditMode){
+            console.log(response.data);
             console.log("Data modified OK");
         } else {
             this.setState({

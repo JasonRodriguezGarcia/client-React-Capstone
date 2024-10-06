@@ -17,7 +17,7 @@ class ListEnterprises extends Component {
             };
     
         this.getListEnterprises = this.getListEnterprises.bind(this);
-        this.HandleDeleteRecord = this.HandleDeleteRecord.bind(this);
+        this.handleDeleteRecord = this.handleDeleteRecord.bind(this);
     }
 
 getListEnterprises() {
@@ -43,7 +43,7 @@ componentDidMount(){
     this.getListEnterprises();
 }
 
-HandleDeleteRecord(dato) {
+handleDeleteRecord(dato) {
     var opcion = window.confirm("Estás seguro que deseas Eliminar la empresa "+dato.empresas_nombre);
     if (opcion === true) {
         this.setState({
@@ -121,7 +121,7 @@ render() {
                                 >
                                     <FontAwesomeIcon icon={faEdit} />
                                 </Link>
-                                <button type='button' onClick={() => this.HandleDeleteRecord(dato)} className="btn btn-danger"
+                                <button type='button' onClick={() => this.handleDeleteRecord(dato)} className="btn btn-danger"
                                 aria-label="buttondeleteEnterprise" title="Borrar Empresa"
                                 >
                                     <FontAwesomeIcon icon={faTrashAlt} />
