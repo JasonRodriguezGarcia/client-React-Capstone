@@ -197,6 +197,7 @@ clearEnterpriseItem() {
 }
 
 getOfferSecundaryData () {
+    debugger
     axios({
         method: "GET",
         url: this.props.hostAPP + "/get_offer_secundary_databases",
@@ -214,6 +215,7 @@ getOfferSecundaryData () {
                 jornadasData: response.data.jornadas,
                 estadosOfertasData: response.data.estados_ofertas,
             });
+            console.log(response.data)
             console.log("Offer Secundary databases GET Data OK");
         })
         .catch(error => {
@@ -332,7 +334,7 @@ componentDidMount () {
         }));
         const jornadas = this.state.jornadasData.map((jornada => {
             return ( 
-                <option key={jornada.jornadas_id_jornada} value={jornada.jornadas_id_jornada}>{jornada.jornadas_descipcion_jornada} </option> 
+                <option key={jornada.jornadas_id_jornada} value={jornada.jornadas_id_jornada}>{jornada.jornadas_descripcion_jornada} </option> 
             );
         }));
         const estadosOfertas = this.state.estadosOfertasData.map((estadosOferta => {
