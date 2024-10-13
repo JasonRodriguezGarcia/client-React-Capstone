@@ -197,7 +197,6 @@ clearEnterpriseItem() {
 }
 
 getOfferSecundaryData () {
-    debugger
     axios({
         method: "GET",
         url: this.props.hostAPP + "/get_offer_secundary_databases",
@@ -384,7 +383,7 @@ componentDidMount () {
                                         checked={this.state.form.priorityField1}
                                         onChange={this.handleChangeCheckBox}
                                     />
-                                    <label htmlFor="priorityField1">
+                                    <label htmlFor="priorityField1" style={{fontWeight: "bold"}}>
                                         Imprescindible
                                     </label>
                             </label>
@@ -415,7 +414,7 @@ componentDidMount () {
                                         checked={this.state.form.priorityField2}
                                         onChange={this.handleChangeCheckBox}
                                     />
-                                    <label htmlFor="priorityField1">
+                                    <label htmlFor="priorityField1" style={{fontWeight: "bold"}}>
                                         Imprescindible
                                     </label>
                             </label>
@@ -446,7 +445,7 @@ componentDidMount () {
                                         checked={this.state.form.priorityField3}
                                         onChange={this.handleChangeCheckBox}
                                     />
-                                    <label htmlFor="priorityField3">
+                                    <label htmlFor="priorityField3" style={{fontWeight: "bold"}}>
                                         Imprescindible
                                     </label>
                             </label>
@@ -477,7 +476,7 @@ componentDidMount () {
                                         checked={this.state.form.priorityField4}
                                         onChange={this.handleChangeCheckBox}
                                     />
-                                    <label htmlFor="priorityField1">
+                                    <label htmlFor="priorityField1" style={{fontWeight: "bold"}}>
                                         Imprescindible
                                     </label>
                             </label>

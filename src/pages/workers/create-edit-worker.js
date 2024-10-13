@@ -60,9 +60,9 @@ getWorkerItem () {
     axios({
         method: "POST",
         url: this.props.hostAPP+`/get_listworkers/${this.state.editedId}`,
-        data: {
-            query: `SELECT * FROM trabajadores WHERE trabajadores_id_trabajador=${this.state.editedId};`
-        },
+        // data: {
+        //     query: `SELECT * FROM trabajadores WHERE trabajadores_id_trabajador=${this.state.editedId};`
+        // },
         withCredentials: false
     })
     .then(response => {

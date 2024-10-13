@@ -41,9 +41,9 @@ getListWorkers() {  //WORKING OK retrieving data selection
     axios({
         method: this.state.apiAction,
         url: this.props.hostAPP + "/get_listworkers",
-        data: {
-            query: `SELECT * FROM trabajadores;`
-        },
+        // data: {
+        //     query: `SELECT * FROM trabajadores;`
+        // },
         withCredentials: false
     })
     .then(response => {

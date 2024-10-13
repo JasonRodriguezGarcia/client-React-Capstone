@@ -155,18 +155,7 @@ handleUpdateOcupaciones(data, action) {
 viewCurriculumPDF() {
     // Retrieving filename and filedata
     const index = this.state.curriculum.indexOf(',');
-    const viewFileName = this.state.curriculum.slice(0, index);
     const viewFileData = this.state.curriculum.slice(index+30);
-    const pdfBlob =  'data:application/pdf;base64,'+ viewFileData
-    // Down load pdf file
-    // Creating download environment
-    // const linkSource = `data:application/pdf;base64,${viewFileData}`;
-    // const downloadLink = document.createElement("a");
-    // const fileName = viewFileName;
-    // downloadLink.href = linkSource;
-    // downloadLink.download = fileName;
-    // downloadLink.click();
-
     // Decode the base64 string to binary data
     var binaryData = atob(viewFileData);
     // Create a Uint8Array from the binary data

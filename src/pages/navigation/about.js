@@ -25,12 +25,12 @@ export default class About extends Component { // props are like parameters
                 <br/>
                 <div className="contenido">
                     <ol className="listadoagenda">
-                        <li><a href={about1Image}>Resumen</a></li>
-                        <li><a href={about2Image}>Problem definition</a></li>
-                        <li><a href={about3Image}>Benefits</a></li>
-                        <li><a href={about4Image}>Project timeline</a></li>
-                        <li><a href={about5Image}>Statistics</a></li>
-                        <li><a href={about6Image}>Developer</a></li>
+                        <li><a href={about1Image} target="_blank" rel="noreferrer" >Resumen</a></li>
+                        <li><a href={about2Image} target="_blank" rel="noreferrer" >Problem definition</a></li>
+                        <li><a href={about3Image} target="_blank" rel="noreferrer" >Benefits</a></li>
+                        <li><a href={about4Image} target="_blank" rel="noreferrer" >Project timeline</a></li>
+                        <li><a href={about5Image} target="_blank" rel="noreferrer" >Statistics</a></li>
+                        <li><a href={about6Image} target="_blank" rel="noreferrer" >Developer</a></li>
                     </ol>
                 </div>
             </div>
