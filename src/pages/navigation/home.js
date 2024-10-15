@@ -19,12 +19,13 @@ export default class Home extends Component { // props are like parameters
                     <h1><a href="#" name="inicio">Bienvenido a T@lent+45</a></h1>
                     <br/>
                     <div className="introduction">
-                        <p>La presente página web permite poner en contacto a personas con 45 años o más, desempleadas o en búsqueda de trabajo, con empresas buscando en busca personal. Para ello hay que seguir un proceso de alta en el sistema que permite almacenar los datos introducidos y gestinarlos para poder recibir ofertas y ser seleccionado como candidato (usuario trabajador) o poder seleccionar candidatos (usuario empresa).
+                        <p>La presente página web permite poner en contacto a personas con 45 años o más en búsqueda de trabajo, con empresas en búsqueda de personal. <br/>
+                        Para ello hay que seguir un proceso de alta en el sistema que permite almacenar los datos introducidos y gestionarlos para poder recibir ofertas y ser seleccionados como candidatos/as (usuarios trabajadores) o poder seleccionar candidatos (usuario empresa).
                         </p>
 
                         <ol>
                             En resumen:
-                            <li>Darse de alta e Introducir datos detallados (trabajador/empresa) para poder recibir credenciales</li>
+                            <li>Darse de alta e Introducir datos detallados (trabajador/empresa) para poder recibir credenciales de acceso</li>
                             <li>Entrar en el sistema con las credenciales recibidas</li>
                             <li>Poder gestionar los datos introducidos así como poder consultar ofertas recibidas (trabajador)/ofertas gestionadas (empresa)
                             </li>
@@ -36,13 +37,13 @@ export default class Home extends Component { // props are like parameters
                                 <FontAwesomeIcon icon={faUser}
                                                     />
                             </div>
-                            <h2>Como trabajador</h2>
+                            <h2>Como trabajador/a</h2>
                         </div>
                             <p>
                                 Utiliza esta página web para conseguir un empleo que se adapte lo mejor posible a las características de tu perfil.
                             </p>
-                            <p>Para poder darte de alta, tendrás que introducir tus datos personales poder darte a conocer de una manera y poder revisar/recibir las ofertas de las empresas interesadas.<br/>
-                            El proceso no es complicado pero hará falta un teléfono para poder recibir sms del alta y un correo electrónico para poder recibir las ofertas que cumplan con tu perfil. Durante el mismo proceso se tendrá que aceptar las cláusulas de la LOPD (Ley Orgánica de Protección de Datos).</p>
+                            <p>Para poder darte de alta, tendrás que introducir tus datos personales para poder darte a conocer de una manera sencilla y poder revisar/recibir las ofertas de las empresas interesadas.<br/>
+                            El proceso no es complicado pero hará falta un teléfono para poder recibir un sms del alta y un correo electrónico para poder recibir las ofertas que cumplan con tu perfil. Durante el mismo proceso se tendrá que aceptar las cláusulas de la LOPD (Ley Orgánica de Protección de Datos).</p>
                         <div className="workercontainerimagesvideos">
                             <a href="https://www.generacionsavia.org/formaciones-savia" target="_blank" rel="noreferrer">
                                 <img src={Image1} alt="Image1" title="GENERACION SAVIA"></img></a>
@@ -80,7 +81,7 @@ export default class Home extends Component { // props are like parameters
                             </div>
                             <h2>Como empresa</h2>
                             <p>Ingresa en esta página web para conseguir una búsqueda de personal de una manera cómoda y fácil que mejor se adapte a sus necesidades de reclutamiento</p>
-                            <p>Una vez realizada el alta, se introducirán los datos necesarios del perfil a concretar pudiéndo modificar los criterios de búsqueda para conseguir una mayor lista de posibles candidatos.</p>
+                            <p>Una vez realizada el alta, se introducirán los datos necesarios del perfil a concretar pudiendo modificar los criterios de búsqueda para conseguir una mayor lista de posibles candidatos.</p>
                         </div>
                         <div className="enterprisescontainerimagesvideos">
                                 <img src={Image5} alt="Image5" title="empresa-oficina"></img>
