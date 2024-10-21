@@ -532,7 +532,9 @@ render() {
                         <div className="row mb-1">
                             <div className="col">
                                 <label htmlFor="municipio">Municipio</label>
-                                <select name="municipio" id="municipio" className="form-control" value={this.state.id_municipio} onChange={this.handleChangeMunicipios}
+                                <select name="municipio" id="municipio" className="form-control" value={this.state.id_municipio} 
+                                    style={{appearance: "auto"}}
+                                    onChange={this.handleChangeMunicipios}
                                     disabled={this.state.fieldDisabled}>
                                     {optionsMunicipios} 
                                 </select>
@@ -545,7 +547,9 @@ render() {
                             </div>
                             <div className="col">
                                 <label htmlFor="provincia">Provincia</label>
-                                <select name="provincia" id="provincia" className="form-control" value={this.state.id_provincia} onChange={this.handleChangeProvincias}
+                                <select name="provincia" id="provincia" className="form-control" value={this.state.id_provincia}
+                                    style={{appearance: "auto"}}
+                                    onChange={this.handleChangeProvincias}
                                     disabled={this.state.fieldDisabled}>
                                     {optionsProvincias} 
                                 </select>
@@ -554,7 +558,9 @@ render() {
                         <div className="row mb-1">
                             <div className="col">
                                 <label htmlFor="vehiculo">Vehículo</label>
-                                <select name="vehiculo" id="vehiculo" className="form-control" value={this.state.id_vehiculo} onChange={this.handleChangeVehiculos}
+                                <select name="vehiculo" id="vehiculo" className="form-control" value={this.state.id_vehiculo} 
+                                    style={{appearance: "auto"}}
+                                    onChange={this.handleChangeVehiculos}
                                     disabled={this.state.fieldDisabled}>
                                     {optionsVehiculos} 
                                 </select>
@@ -574,7 +580,9 @@ render() {
                             </div>
                             <div className="col">
                                 <label htmlFor="situacion">Situación</label>
-                                <select name="situacion" id="situacion" className="form-control" value={this.state.id_situacion} onChange={this.handleChangeTrabajadores_situaciones}
+                                <select name="situacion" id="situacion" className="form-control" value={this.state.id_situacion} 
+                                    style={{appearance: "auto"}}
+                                    onChange={this.handleChangeTrabajadores_situaciones}
                                     disabled={this.state.fieldDisabled}>
                                     {situaciones} 
                                 </select>

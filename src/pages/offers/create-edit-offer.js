@@ -394,6 +394,7 @@ componentDidMount () {
                                 type="text"
                                 required
                                 disabled={this.state.fieldDisabled}
+                                style={{appearance: "auto"}}
                                 onChange={this.handleChange}
                                 value={this.state.form.id_ocupacion}
                             >
@@ -456,6 +457,7 @@ componentDidMount () {
                                 type="text"
                                 required
                                 disabled={this.state.fieldDisabled}
+                                style={{appearance: "auto"}}
                                 onChange={this.handleChange}
                                 value={this.state.form.id_formacion}
                             >
@@ -487,6 +489,7 @@ componentDidMount () {
                                 type="text"
                                 required
                                 disabled={this.state.fieldDisabled}
+                                style={{appearance: "auto"}}
                                 onChange={this.handleChange}
                                 value={this.state.form.id_vehiculo}
                             >
@@ -506,6 +509,7 @@ componentDidMount () {
                                 type="text"
                                 required
                                 disabled={this.state.fieldDisabled}
+                                style={{appearance: "auto"}}
                                 onChange={this.handleChange}
                                 value={this.state.form.id_municipio}
                             >
@@ -527,6 +531,7 @@ componentDidMount () {
                                 type="text"
                                 required
                                 disabled={this.state.fieldDisabled}
+                                style={{appearance: "auto"}}
                                 onChange={this.handleChange}
                                 value={this.state.form.id_jornada}
                             >
@@ -564,6 +569,7 @@ componentDidMount () {
                                 type="text"
                                 required
                                 disabled={this.state.fieldDisabled}
+                                style={{appearance: "auto"}}
                                 onChange={this.handleChange}
                                 value={this.state.form.id_contrato}
                             >
