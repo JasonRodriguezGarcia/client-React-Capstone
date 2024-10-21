@@ -12,6 +12,7 @@ import { es } from 'date-fns/locale/es';
 import OcupationsWorkers from "./ocupations-workers";
 import FormationsWorkers from "./formation-workers";
 import PdftoView from "../../assets/LOPD.pdf";
+import ViewCurriculumPdf from "../../shared/view-curriculum-pdf";
 registerLocale('es', es)    // DatePicker config
 
 // TODO:
@@ -64,7 +65,6 @@ class CreateEditWorkerItem extends Component {
         this.handleChangeCurriculumPDF = this.handleChangeCurriculumPDF.bind(this);
         this.uploadFile = this.uploadFile.bind(this);
         this.convertBase64 = this.convertBase64.bind(this);
-        this.viewCurriculumPDF = this.viewCurriculumPDF.bind(this); 
         this.handleChangeDate = this.handleChangeDate.bind(this);
         this.handleUpdateOcupaciones = this.handleUpdateOcupaciones.bind(this); // To update Ocupaciones when leaving OcupationsWorkers
         this.handleUpdateFormaciones = this.handleUpdateFormaciones.bind(this); // To update Formaciones when leaving FormationsWorkers
@@ -150,24 +150,6 @@ handleUpdateOcupaciones(data, action) {
             ocupaciones: myArray
         });
     }
-}
-
-viewCurriculumPDF() {
-    // Retrieving filename and filedata
-    const index = this.state.curriculum.indexOf(',');
-    const viewFileData = this.state.curriculum.slice(index+30);
-    // Decode the base64 string to binary data
-    var binaryData = atob(viewFileData);
-    // Create a Uint8Array from the binary data
-    var byteArray = new Uint8Array(binaryData.length);
-    for (var i = 0; i < binaryData.length; i++) {
-        byteArray[i] = binaryData.charCodeAt(i) & 0xff;
-    }
-    var blob = new Blob([byteArray], {type: "application/pdf"});
-    //Build a URL from the file
-    const fileURL = URL.createObjectURL(blob);
-    //Open the URL on new Window
-    window.open(fileURL); 
 }
 
 async uploadFile(e) {
@@ -368,13 +350,6 @@ handleChangeTrabajadores_situaciones(event) {
         [event.target.name]: this.props.situacionesData[event.target.value-1].descripcion_situacion
     });
 }
-
-// handleChangeCarnet(event) {
-//     this.setState ({
-//         id_provincia: [event.target.value],
-//         [event.target.name]: this.props.provinciasData[event.target.value-1].descripcion_provincia
-//     });
-// }
 
 handleChangeVehiculos(event) {
     this.setState ({
@@ -641,7 +616,7 @@ render() {
                                     <div className="pdf-link">
                                         {/* Curriculum icon is enabled if there is an attached file or is fieldDisabled = false */}
                                         {this.state.curriculumIconEnabled   // type="button" to avoid SUBMIT default behaviour
-                                            ?   <button  type="button" id="buttonPDF" aria-label="buttonPDF" disabled={this.state.fieldDisabled} onClick={() => this.viewCurriculumPDF()}>
+                                            ?   <button  type="button" id="buttonPDF" aria-label="buttonPDF" disabled={this.state.fieldDisabled} onClick={() => ViewCurriculumPdf(this.state.curriculum)}>
                                                     <FontAwesomeIcon id="iconPDF" icon={faFilePdf} 
                                                         style={{
                                                             cursor: "pointer",

@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import "./table.css";
 import { Table, Button, Container, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import ViewCurriculumPdf from "../../shared/view-curriculum-pdf";
 
 class ListResults extends Component {
     constructor(props) {
@@ -24,26 +25,8 @@ class ListResults extends Component {
         this.populateResults = this.populateResults.bind(this);
         this.buildForm = this.buildForm.bind(this);
         this.handleAptoClick = this.handleAptoClick.bind(this);
-        this.viewCurriculumPDF = this.viewCurriculumPDF.bind(this);
     }
 
-viewCurriculumPDF(curriculum) {
-    // Retrieving filename and filedata
-    const index = curriculum.indexOf(',');
-    const viewFileData = curriculum.slice(index+30);
-    // Decode the base64 string to binary data
-    var binaryData = atob(viewFileData);
-    // Create a Uint8Array from the binary data
-    var byteArray = new Uint8Array(binaryData.length);
-    for (var i = 0; i < binaryData.length; i++) {
-        byteArray[i] = binaryData.charCodeAt(i) & 0xff;
-    }
-    var blob = new Blob([byteArray], {type: "application/pdf"});
-    //Build a URL from the file
-    const fileURL = URL.createObjectURL(blob);
-    //Open the URL on new Window
-    window.open(fileURL); 
-}
 handleAptoClick(event, workerSelection) {
     // debugger
     // console.log("imprimiendo evento:", event);
@@ -119,8 +102,6 @@ generateResults() {
         url: this.props.offerEditMode
             ? this.props.hostAPP + `/generate_offerresults/${this.props.offerId}`
             : this.props.hostAPP + `/generate_offerresults`
-        // ? `http://127.0.0.1:5000/generate_offerresults/${this.props.offerId}`
-        // : `http://127.0.0.1:5000/generate_offerresults`
 ,
         data: {
             criteria: criterias,
@@ -209,7 +190,7 @@ render() {
                                     <td>{dato.trabajadores_telefono_contacto}</td>
                                     <td><button type='button' className="none" style={{marginRight: "10px"}}
                                             aria-label="buttonpdf" title="pdf"
-                                            onClick={() => this.viewCurriculumPDF(dato.trabajadores_curriculum)}
+                                            onClick={() => ViewCurriculumPdf(dato.trabajadores_curriculum)}
                                         >PDF
                                         </button>
                                         <button type='button' id="apto" className="green sm" style={{marginRight: "10px"}}

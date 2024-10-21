@@ -16,7 +16,7 @@ export default class Home extends Component { // props are like parameters
         return (
             <div className="body">
 
-                    <h1><a href="#" name="inicio">Bienvenido a T@lent+45</a></h1>
+                    <h1>Bienvenido a T@lent+45</h1>
                     <br/>
                     <div className="introduction">
                         <p>La presente página web permite poner en contacto a personas con 45 años o más en búsqueda de trabajo, con empresas en búsqueda de personal. <br/>
