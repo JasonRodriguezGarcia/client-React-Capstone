@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { Table, Button, Container, Modal, ModalHeader, ModalBody, FormGroup, ModalFooter } from "reactstrap";
+import SearchOcupations from "./search-formations";
 
 class FormationsWorkers extends Component {
     constructor(props) {
@@ -26,8 +27,25 @@ class FormationsWorkers extends Component {
         this.closeInsertModal = this.closeInsertModal.bind(this);
         this.newIdGenerator = this.newIdGenerator.bind(this);
         this.validateValues = this.validateValues.bind(this);
+        this.handleOcupation = this.handleOcupation.bind(this); // update ocupation data from SearchOcupations component for submit validation
+        this.handleInputOcupationIncomplete = this.handleInputOcupationIncomplete.bind(this); // handle Ocupation data in SearchOcupations is not completed for submit validation
     }
 
+handleInputOcupationIncomplete(value) {
+    this.setState({
+        inputOcupationIncomplete: value
+    })
+}
+
+handleOcupation(descripcion, id) {
+    this.setState({
+        form: {
+        ...this.state.form,
+        ocupaciones_descripcion_ocupacion: descripcion,
+        ocupaciones_id_ocupacion: id
+        },
+    });
+}
 
 componentDidUpdate () {
     if (this.props.initialEditData) { // If we are Editing a Worker
@@ -109,7 +127,7 @@ handleEditRecord(dato) {
     }
     var counter = 0;
     var myArray = this.state.data;
-    myArray.map((registro) => {
+    myArray.forEach((registro) => {
         if (dato.id === registro.id) {
             myArray[counter].id_formacion = dato.id_formacion;
             myArray[counter].descripcion_formacion = this.props.formacionesData[dato.id_formacion+1];
@@ -259,7 +277,7 @@ render() {
               
                 <FormGroup>
                     <label>
-                        Id Ocupación:
+                        Formación:
                     </label>
                     <select
                         className="form-control"
@@ -314,8 +332,15 @@ render() {
 
                 <FormGroup>
                     <label>
-                        id_formacion: 
+                        Formación: 
                     </label>
+                    {/* <SearchOcupations ocupationsData = {this.props.formacionesData}
+                        handleOcupation = {this.handleOcupation}
+                        form = {this.state.form}
+                        handleInputOcupationIncomplete = {this.handleInputOcupationIncomplete}
+                        // inputOcupationIncomplete = {this.state.inputOcupationIncomplete}
+                        // form = {this.state.form}
+                    /> */}
                     <select
                         className="form-control"
                         name="id_formacion"

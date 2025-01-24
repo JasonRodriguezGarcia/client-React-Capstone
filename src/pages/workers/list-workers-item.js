@@ -7,15 +7,15 @@ import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
 const ListWorkersItem = props => {
     const {
-        id,
-        nombre,
-        apellidos,
-        fecha_nacimiento,
-        doi,
-        id_municipio,
-        codigo_postal,
-        id_provincia,
-        telefono_contacto,
+        trabajadores_id_trabajador,
+        trabajadores_nombre,
+        trabajadores_apellidos,
+        trabajadores_fecha_nacimiento,
+        trabajadores_doi,
+        trabajadores_id_municipio,
+        trabajadores_codigo_postal,
+        trabajadores_id_provincia,
+        trabajadores_telefono_contacto,
      } = props.workerItem;
 
 
@@ -41,22 +41,22 @@ const ListWorkersItem = props => {
     }
 
     return (
-        <tr key={id}>
-            <td>{id}</td>
-            <td>{nombre} {apellidos}</td>
-            <td>{fecha_nacimiento}</td>
-            <td>{doi}</td>
-            <td>{id_municipio}</td>
-            <td>{codigo_postal}</td>
-            <td>{id_provincia}</td>
-            <td>{telefono_contacto}</td>
+        <tr key={trabajadores_id_trabajador}>
+            <td>{trabajadores_id_trabajador}</td>
+            <td>{trabajadores_nombre} {trabajadores_apellidos}</td>
+            <td>{trabajadores_fecha_nacimiento}</td>
+            <td>{trabajadores_doi}</td>
+            <td>{trabajadores_id_municipio}</td>
+            <td>{trabajadores_codigo_postal}</td>
+            <td>{trabajadores_id_provincia}</td>
+            <td>{trabajadores_telefono_contacto}</td>
             <td>
-                <Link to={`/editworker/${id}`} className="btn btn-success" style={{marginRight: "10px"}} aria-label="linkEditWorker"
+                <Link to={`/editworker/${trabajadores_id_trabajador}`} className="btn btn-success" style={{marginRight: "10px"}} aria-label="linkEditWorker"
                     title="Modificar Trabajador"
                 >
                     <FontAwesomeIcon icon={faEdit} />
                 </Link>
-                <button type='button' onClick={() => deleteWorker(id)} className="btn btn-danger" aria-label="buttondeleteWorker"
+                <button type='button' onClick={() => deleteWorker(trabajadores_id_trabajador)} className="btn btn-danger" aria-label="buttondeleteWorker"
                     title="Borrar Trabajador"
                 >
                     <FontAwesomeIcon icon={faTrashAlt} />

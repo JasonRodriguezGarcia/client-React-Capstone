@@ -131,18 +131,19 @@ handleUpdateOcupaciones(data, action) {
             ocupaciones: [...data]  // Another good practise could be .concat
         });
     }else if (action === "delete") {
-            this.setState({
-                ocupaciones: this.state.ocupaciones.filter(item => {
-                        return item.id !== data.id})
-            });
+        this.setState({
+            ocupaciones: this.state.ocupaciones.filter(item => {
+                    return item.ocupaciones_id_ocupacion !== data.id})
+        });
     }else if(action === "edit") {
+        debugger
         var counter = 0;
         var myArray = this.state.ocupaciones;
         myArray.map((registro) => {
             if (data.id === registro.id) {
-                myArray[counter].id_ocupacion = data.id_ocupacion;
-                myArray[counter].descripcion_ocupacion = data.descripcion_ocupacion;
-                myArray[counter].meses = data.meses;
+                myArray[counter].ocupaciones_id_ocupacion = data.ocupaciones_id_ocupacion;
+                myArray[counter].ocupaciones_descripcion_ocupacion = data.ocupaciones_descripcion_ocupacion;
+                myArray[counter].trabajadores_ocupaciones_meses = data.trabajadores_ocupaciones_meses;
             }
             counter++;
         });
@@ -192,33 +193,33 @@ componentWillUnmount() {
 componentDidUpdate () {
     if (Object.keys(this.props.workerItem).length > 0) {
         const {
-            id,
-            nombre,
-            apellidos,
-            fecha_nacimiento,
-            doi,
-            id_municipio,
-            codigo_postal,
-            id_provincia,
-            id_vehiculo,
-            curriculum,
-            telefono_contacto,
-            correo_electronico,
-            id_situacion,
-            lopd,
+            trabajadores_id_trabajador,
+            trabajadores_nombre,
+            trabajadores_apellidos,
+            trabajadores_fecha_nacimiento,
+            trabajadores_doi,
+            trabajadores_id_municipio,
+            trabajadores_codigo_postal,
+            trabajadores_id_provincia,
+            trabajadores_id_vehiculo,
+            trabajadores_curriculum,
+            trabajadores_telefono_contacto,
+            trabajadores_correo_electronico,
+            trabajadores_id_situacion,
+            trabajadores_lopd,
             ocupaciones,
             formaciones
             }  = this.props.workerItem[0];
         
         this.props.clearWorkerItem();
 
-        if (curriculum) {
+        if (trabajadores_curriculum) {
             // PROCESS TO POPULATE input WITH ATTACHED FILE DETAILS
             // Retrieving filename
-            const i = curriculum.indexOf(',');
-            const fileName = curriculum.slice(0, i);
+            const i = trabajadores_curriculum.indexOf(',');
+            const fileName = trabajadores_curriculum.slice(0, i);
             // Create a new File object
-            const myFile = new File([curriculum], fileName, {
+            const myFile = new File([trabajadores_curriculum], fileName, {
                 type: 'application/pdf',
                 lastModified: new Date(),
             });   
@@ -229,20 +230,20 @@ componentDidUpdate () {
         }
 
         this.setState({
-            id: id,
-            nombre: nombre || "",
-            apellidos: apellidos || "",
-            fecha_nacimiento: fecha_nacimiento || "",
-            doi: doi || "",
-            id_municipio: id_municipio || 1,
-            codigo_postal: codigo_postal || "",
-            id_provincia: id_provincia  || 1,
-            id_vehiculo: id_vehiculo || 1,
-            curriculum: curriculum || "",
-            telefono_contacto: telefono_contacto || "",
-            correo_electronico: correo_electronico || "",
-            id_situacion: id_situacion || 1,
-            lopd: lopd,
+            id: trabajadores_id_trabajador,
+            nombre: trabajadores_nombre,
+            apellidos: trabajadores_apellidos,
+            fecha_nacimiento: trabajadores_fecha_nacimiento,
+            doi: trabajadores_doi,
+            id_municipio: trabajadores_id_municipio,
+            codigo_postal: trabajadores_codigo_postal,
+            id_provincia: trabajadores_id_provincia,
+            id_vehiculo: trabajadores_id_vehiculo,
+            curriculum: trabajadores_curriculum,
+            telefono_contacto: trabajadores_telefono_contacto,
+            correo_electronico: trabajadores_correo_electronico,
+            id_situacion: trabajadores_id_situacion,
+            lopd: trabajadores_lopd,
             ocupaciones: ocupaciones,
             formaciones: formaciones,
             apiUrl: this.props.hostAPP + `/editworker/${this.props.editedId}`,
@@ -620,7 +621,7 @@ render() {
                                     accept=".pdf" required/>
                                     {/* añadir a secas para varios ficheros --> multiple */}
                             </div>
-                            <div className="col">
+                            <div className="col" style={{display: "flex", alignItems: "center"}}>
                                     <div className="pdf-link">
                                         {/* Curriculum icon is enabled if there is an attached file or is fieldDisabled = false */}
                                         {this.state.curriculumIconEnabled   // type="button" to avoid SUBMIT default behaviour
@@ -639,9 +640,20 @@ render() {
                                         }
                                     </div>
                             </div>
-                            <div className="col">
-                                <fieldset>Aceptación 
-                                <button onClick={() => {this.viewPdfFile(PdftoView)} }
+                            <div className="col" style={{display: "flex", alignItems: "center"}}>
+                                <input type="checkbox" name="lopd" id="lopd" checked={this.state.lopd} 
+                                    disabled={this.state.fieldDisabled || this.state.id!==0} aria-label="lopd"
+                                    required onChange={this.handleChangeLOPD}
+                                    style={{
+                                        verticalAlign: "middle",
+                                        width: "30px",
+                                        height: "30px",
+
+                                    }}
+                                />                                 
+                                <label name="aceptacion" id="aceptacion">Aceptación 
+                                </label>
+                                <button id="aceptacion" onClick={() => {this.viewPdfFile(PdftoView)} }
                                     style={{ 
                                         fontweight: "900",
                                         color: "blue",
@@ -652,17 +664,8 @@ render() {
                                     >
                                         &nbsp;<u><b>L.O.P.D</b></u>
                                 </button>
-                                    &nbsp;(click en el recuadro)
-                                </fieldset>
-                                    <input type="checkbox" name="lopd" id="lopd" checked={this.state.lopd} 
-                                        disabled={this.state.fieldDisabled || this.state.id!==0} aria-label="lopd"
-                                        required onChange={this.handleChangeLOPD}
-                                        style={{
-                                            width: "30px",
-                                            height: "30px",
+                                &nbsp;(click en el recuadro)
 
-                                        }}
-                                        />
                             </div>
                         </div>
                         {this.state.submitButtonEnabled // Action Text

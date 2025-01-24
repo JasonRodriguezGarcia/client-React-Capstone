@@ -24,6 +24,7 @@ openMenu() {
     <nav id="menu">
         {/* <!-- start menu --> */}
         <ul>
+        TEST MODE !!
             <li><Link to="/">Home</Link></li>
             <li><Link to="#">Administrator</Link>
             {/* <!-- start menu desplegable --> */}

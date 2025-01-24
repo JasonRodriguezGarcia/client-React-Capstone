@@ -116,23 +116,22 @@ validateValues(inputValues) {
     if (isNaN(parseInt(inputValues.trabajadores_ocupaciones_meses))) {
         return ("Introducir meses con un valor correcto.")
     }
-    if (parseInt(inputValues.trabajadores_ocupaciones_meses) < "0") {
+    if (parseInt(inputValues.trabajadores_ocupaciones_meses) <= "0") {
         return ("Valores meses no válido.")
     }
-    if (inputValues.trabajadores_ocupaciones_meses.length === 2 && inputValues.trabajadores_ocupaciones_meses[0] === "0") {
-        return ("Valor introducido en meses no válido.")
-    }
+    // if (inputValues.trabajadores_ocupaciones_meses.length === 2 && inputValues.trabajadores_ocupaciones_meses[0] === "0") {
+    //     return ("Valor introducido en meses no válido.")
+    // }
     var repeated = this.state.data.filter(item => {
         return item.ocupaciones_id_ocupacion === inputValues.ocupaciones_id_ocupacion;
     });
     if (repeated.length !== 0 && this.state.modalUpdate !== true) {
         return ("Ocupación ya existente");
     }
-    if (this.state.inputOcupationIncomplete && !this.props.workerEditMode) {
-        return ("Ocupacion incorrecta. Borre Ocupacion y pruebe otra vez.");
-        // añadir para que que la ocupación se ponga a ""¿?
+    debugger
+    if (this.state.inputOcupationIncomplete && !this.state.modalUpdate) {
+        return ("Ocupacion incompleta");
     }
-   
     return "";
 }
 
@@ -249,40 +248,24 @@ handleInsertRecord() {
 }
 
 handleChange(e) {
-    console.log(e);
-        debugger
-    if (e.target.name === "ocupationText") {
-        const selectedOption = e.target.value;
-        // Encontramos la opción que coincide con el valor seleccionado en el datalist
-        const datalist = document.getElementById('ocupationList');
-        const options = Array.from(datalist.options);
-        const selectedOptionElement = options.find(option => option.value === selectedOption);
-    debugger
-        if (selectedOptionElement) {
-          const dataIdOcupacion = selectedOptionElement.getAttribute('data-idOcupacion');
-          console.log('data-idOcupacion:', dataIdOcupacion);
-          // Aquí puedes hacer algo con el valor de data-idocupacion
-          this.setState ({
-              form: {
-                  ...this.state.form,
-                  ocupaciones_descripcion_ocupacion: e.target.value,
-                  ocupaciones_id_ocupacion: dataIdOcupacion
-                },
-                inputOcupationIncomplete: false
-            });
-        } else {
-            this.setState({ inputOcupationIncomplete: true }); 
-        }
-    } else {
-        
+    // // console.log(e);
+    // if (e.target.name === "id_ocupacion") {
+    //     // console.log(e);
+    //     this.setState({
+    //         form: {
+    //         ...this.state.form,
+    //         [e.target.name]: e.target.value,
+    //         descripcion_ocupacion: this.props.ocupacionesData[e.target.value-1].descripcion_ocupacion
+    //         }
+    //     });
+    // } else {
         this.setState({
             form: {
             ...this.state.form,
             [e.target.name]: e.target.value,
             },
         });
-    }
-
+    // }
 }
 
 render() {
@@ -291,20 +274,6 @@ render() {
     //         <option key={ocupacion.ocupaciones_id_ocupacion} value={ocupacion.ocupaciones_id_ocupacion}>{ocupacion.ocupaciones_descripcion_ocupacion} </option> 
     //     );
     // }));
-    const ocupaciones = this.props.ocupacionesData.map((ocupacion => {
-        return ( 
-            // <option key={ocupacion.ocupaciones_id_ocupacion} value={ocupacion.ocupaciones_id_ocupacion}>{ocupacion.ocupaciones_descripcion_ocupacion} </option> 
-
-            // <option key = {ocupacion.id_ocupacion} value = {ocupacion.descripcion_ocupacion}
-            //     data-idocupacion = {ocupacion.id_ocupacion}
-            // >
-            //     {ocupacion.descripcion_ocupacion}
-            // </option> 
-            // <option key={ocupacion.id_ocupacion} value={ocupacion.id_ocupacion}></option> 
-            <option key={ocupacion.id_ocupacion} value={ocupacion.descripcion_ocupacion}
-                data-idOcupacion={ocupacion.id_ocupacion}/>
-        );
-    }));
 
     return (
         <>
@@ -400,6 +369,7 @@ render() {
                         type="text"
                         maxLength={3}
                         min={1} max={999}
+                        // defaultValue={0}
                         required
                         onKeyDown={e=>this.checkLength(e)}
                         onChange={this.handleChange}
@@ -449,18 +419,24 @@ render() {
                     <label>
                         Ocupacion: 
                     </label>
-                    <input type="search" name="ocupationText" id="ocupationText" list="ocupationList"
+                    <SearchOcupations ocupationsData = {this.props.ocupacionesData}
+                        handleOcupation = {this.handleOcupation}
+                        form = {this.state.form}
+                        handleInputOcupationIncomplete = {this.handleInputOcupationIncomplete}
+                        // inputOcupationIncomplete = {this.state.inputOcupationIncomplete}
+                        // form = {this.state.form}
+                    />
+                    {/* <select
+                        className="form-control"
+                        name="id_ocupacion"
+                        type="number"
+                        autoFocus={true}
                         autoComplete="on"
                         onChange={this.handleChange}
-                        className="form-control"
-                        placeholder="Escribir término y seleccione en la lista"
-                    />
-                    <datalist
-                        id="ocupationList"
+                        value={this.state.form.id_ocupacion}
                     >
                         {ocupaciones}
-                    </datalist>
-
+                    </select> */}
                 </FormGroup>
                 <FormGroup>
                     <label>

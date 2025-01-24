@@ -1,10 +1,11 @@
 // import React, {useState, useEffect} from 'react'
+
+// en esta version funciona con DATALIST OK
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle, faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { Table, Button, Container, Modal, ModalHeader, ModalBody, FormGroup, ModalFooter } from "reactstrap";
-import SearchOcupations from "./search-ocupations";
-
+// import SearchOcupations from "./searchocupations";
 class OcupationsWorkers extends Component {
     constructor(props) {    // Receiving props from CreateEditWorker
       super(props); //  ocupaciones={this.state.ocupaciones}
@@ -17,12 +18,11 @@ class OcupationsWorkers extends Component {
             modalInsert: false,
             form: {
                 id: "",
-                // id_ocupacion: "",
-                ocupaciones_id_ocupacion: "",
-                ocupaciones_descripcion_ocupacion: "",
-                trabajadores_ocupaciones_meses: "0",
+                id_ocupacion: "",
+                descripcion_ocupacion: "",
+                meses: "0",
             },
-            inputOcupationIncomplete: true,
+            inputOcupationIncomplete: true, 
         };
       
         this.handleDeleteRecord = this.handleDeleteRecord.bind(this);
@@ -49,15 +49,15 @@ handleOcupation(descripcion, id) {
     this.setState({
         form: {
         ...this.state.form,
-        ocupaciones_descripcion_ocupacion: descripcion,
-        ocupaciones_id_ocupacion: id
+        descripcion_ocupacion: descripcion,
+        id_ocupacion: id
         },
     });
+
 }
 
 checkLength(e){
-    console.log(e);
-    // debugger
+    // console.log(e);
     if(e.target.value.length === e.target.maxLength && e.key !== "Tab") {
         // console.log("maxlength alcanzado");
         e.stopPropagation();
@@ -113,23 +113,23 @@ componentDidMount(){
 }
 
 validateValues(inputValues) {
-    if (isNaN(parseInt(inputValues.trabajadores_ocupaciones_meses))) {
+    if (isNaN(parseInt(inputValues.meses))) {
         return ("Introducir meses con un valor correcto.")
     }
-    if (parseInt(inputValues.trabajadores_ocupaciones_meses) < "0") {
+    if (parseInt(inputValues.meses) < "0") {
         return ("Valores meses no válido.")
     }
-    if (inputValues.trabajadores_ocupaciones_meses.length === 2 && inputValues.trabajadores_ocupaciones_meses[0] === "0") {
+    if (inputValues.meses.length === 2 && inputValues.meses[0] === "0") {
         return ("Valor introducido en meses no válido.")
     }
     var repeated = this.state.data.filter(item => {
-        return item.ocupaciones_id_ocupacion === inputValues.ocupaciones_id_ocupacion;
+        return item.id_ocupacion === inputValues.id_ocupacion;
     });
     if (repeated.length !== 0 && this.state.modalUpdate !== true) {
         return ("Ocupación ya existente");
     }
     if (this.state.inputOcupationIncomplete && !this.props.workerEditMode) {
-        return ("Ocupacion incorrecta. Borre Ocupacion y pruebe otra vez.");
+        return ("Ocupacion incorrecta. Seleccione de la lista.");
         // añadir para que que la ocupación se ponga a ""¿?
     }
    
@@ -152,10 +152,10 @@ showInsertModal() {
         modalInsert: true,
         form: {
             id: "",
-            ocupaciones_id_ocupacion: "",
-            ocupaciones_descripcion_ocupacion: "",
+            id_ocupacion: "",
+            descripcion_ocupacion: "",
             // años: "0",
-            trabajadores_ocupaciones_meses: "0",
+            meses: "0",
         }
     });
 }
@@ -183,9 +183,9 @@ handleEditRecord(dato) {
     var myArray = this.state.data;
     myArray.forEach((registro) => {
             if (dato.id === registro.id) {
-            myArray[counter].ocupaciones_id_ocupacion = dato.ocupaciones_id_ocupacion;
-            myArray[counter].ocupaciones_descripcion_ocupacion = this.props.ocupacionesData[dato.ocupaciones_id_ocupacion+1];
-            myArray[counter].trabajadores_ocupaciones_meses = dato.trabajadores_ocupaciones_meses;
+            myArray[counter].id_ocupacion = dato.id_ocupacion;
+            myArray[counter].descripcion_ocupacion = this.props.ocupacionesData[dato.id_ocupacion+1];
+            myArray[counter].meses = dato.meses;
         }
         counter+=1;
     });
@@ -194,20 +194,20 @@ handleEditRecord(dato) {
     this.setState({
         form: {
             id: "",
-            ocupaciones_id_ocupacion: "",
-            ocupaciones_descripcion_ocupacion: "",
+            id_ocupacion: "",
+            descripcion_ocupacion: "",
             // descripcion_ocupacion: this.props.ocupacionesData[0].descripcion_ocupacion,
-            trabajadores_ocupaciones_meses: "0",
+            meses: "0",
         }
     });
 };
 
 handleDeleteRecord(dato) {
-    var opcion = window.confirm("Estás seguro que deseas Eliminar la ocupacion "+dato.ocupaciones_descripcion_ocupacion);
+    var opcion = window.confirm("Estás seguro que deseas Eliminar la ocupacion "+dato.descripcion_ocupacion);
     if (opcion === true) {
         this.setState({
             data: this.state.data.filter(item => {
-            return item.ocupaciones_id_ocupacion !== dato.ocupaciones_id_ocupacion;
+            return item.id_ocupacion !== dato.id_ocupacion;
             })
         });
         this.props.handleUpdateOcupaciones(dato,"delete");
@@ -240,10 +240,10 @@ handleInsertRecord() {
     this.setState({
         form: {
             id: "",
-            ocupaciones_id_ocupacion: "",
-            ocupaciones_descripcion_ocupacion: "",
+            id_ocupacion: "",
+            descripcion_ocupacion: "",
             // años: "0",
-            trabajadores_ocupaciones_meses: "0",
+            meses: "0",
         },
     });
 }
@@ -251,7 +251,7 @@ handleInsertRecord() {
 handleChange(e) {
     console.log(e);
         debugger
-    if (e.target.name === "ocupationText") {
+    if (e.target.name =="ocupationText") {
         const selectedOption = e.target.value;
         // Encontramos la opción que coincide con el valor seleccionado en el datalist
         const datalist = document.getElementById('ocupationList');
@@ -265,8 +265,8 @@ handleChange(e) {
           this.setState ({
               form: {
                   ...this.state.form,
-                  ocupaciones_descripcion_ocupacion: e.target.value,
-                  ocupaciones_id_ocupacion: dataIdOcupacion
+                  descripcion_ocupacion: e.target.value,
+                  id_ocupacion: dataIdOcupacion
                 },
                 inputOcupationIncomplete: false
             });
@@ -282,15 +282,13 @@ handleChange(e) {
             },
         });
     }
-
 }
 
+clickedOcupaciones(event) {
+    debugger
+    console.log("Clickado en Ocupaciones", event)
+}
 render() {
-    // const ocupaciones = this.props.ocupacionesData.map((ocupacion => {
-    //     return ( 
-    //         <option key={ocupacion.ocupaciones_id_ocupacion} value={ocupacion.ocupaciones_id_ocupacion}>{ocupacion.ocupaciones_descripcion_ocupacion} </option> 
-    //     );
-    // }));
     const ocupaciones = this.props.ocupacionesData.map((ocupacion => {
         return ( 
             // <option key={ocupacion.ocupaciones_id_ocupacion} value={ocupacion.ocupaciones_id_ocupacion}>{ocupacion.ocupaciones_descripcion_ocupacion} </option> 
@@ -330,9 +328,9 @@ render() {
 
                 <tbody id="ocupationsTableRows">
                     {this.state.data.map((dato) => (
-                        <tr key={dato.ocupaciones_ocupaciones_id_ocupacion}>
-                            <td>{dato.ocupaciones_descripcion_ocupacion}</td>
-                            <td>{dato.trabajadores_ocupaciones_meses}</td>
+                        <tr key={dato.id}>
+                            <td>{dato.descripcion_ocupacion}</td>
+                            <td>{dato.meses}</td>
                             <td>
                                 <Button
                                     color="primary"
@@ -361,9 +359,9 @@ render() {
             </ModalHeader>
   
             <ModalBody>
-            <FormGroup hidden>
-                <label>
-                        Línea Id:
+                <FormGroup hidden>
+                    <label>
+                        Id:
                     </label>
                     <input
                         className="form-control"
@@ -378,17 +376,19 @@ render() {
                     <label>
                         Ocupación: {this.state.form.ocupaciones_descripcion_ocupacion}
                     </label>
-                    {/* <select
+                    {/* <label>
+                        Id Ocupación:
+                    </label>
+                    <select
                         className="form-control"
-                        name="ocupaciones_descripcion_ocupacion"
-                        // disabled={true}
-                        readOnly
+                        name="id_ocupacion"
+                        disabled={true}
                         type="text"
                         onChange={this.handleChange}
-                        value={this.state.form.ocupaciones_descripcion_ocupacion}
-                    > */}
-                        {/* {ocupaciones} */}
-                    {/* </select> */}
+                        value={this.state.form.id_ocupacion}
+                    >
+                        {ocupaciones}
+                    </select> */}
                 </FormGroup>
                 <FormGroup>
                     <label>
@@ -396,14 +396,15 @@ render() {
                     </label>
                     <input
                         className="form-control"
-                        name="trabajadores_ocupaciones_meses"
+                        name="meses"
                         type="text"
                         maxLength={3}
                         min={1} max={999}
+                        // defaultValue={0}
                         required
                         onKeyDown={e=>this.checkLength(e)}
                         onChange={this.handleChange}
-                        value={this.state.form.trabajadores_ocupaciones_meses}
+                        value={this.state.form.meses}
                     />
                 </FormGroup>
             </ModalBody>
@@ -449,18 +450,40 @@ render() {
                     <label>
                         Ocupacion: 
                     </label>
+{/* quitando SearOcupations */}
+                    {/* <SearchOcupations ocupationsData = {this.props.ocupacionesData}
+                        handleOcupation = {this.handleOcupation}
+                        form = {this.state.form}
+                        handleInputOcupationIncomplete = {this.handleInputOcupationIncomplete}
+                    /> */}
+                    {/* <select
+                        className="form-control"
+                        name="id_ocupacion"
+                        type="number"
+                        autoFocus={true}
+                        autoComplete="on"
+                        onChange={this.handleChange}
+                        value={this.state.form.id_ocupacion}
+                    >
+                        {ocupaciones}
+                    </select> */}
                     <input type="search" name="ocupationText" id="ocupationText" list="ocupationList"
                         autoComplete="on"
                         onChange={this.handleChange}
+                        // onSelect={}
                         className="form-control"
-                        placeholder="Escribir término y seleccione en la lista"
                     />
                     <datalist
+                        // name="id_ocupacion"
                         id="ocupationList"
+                        // type="number"
+                        // autoFocus={true}
+                        // autoComplete="on"
+                        // onChange={this.handleChange}
+                        // value={this.state.form.id_ocupacion}
                     >
                         {ocupaciones}
                     </datalist>
-
                 </FormGroup>
                 <FormGroup>
                     <label>
@@ -468,14 +491,14 @@ render() {
                     </label>
                     <input
                         className="form-control"
-                        name="trabajadores_ocupaciones_meses"
+                        name="meses"
                         type="number"
                         maxLength={3}
                         min={1} max={999}
                         required
                         onKeyDown={e=>this.checkLength(e)}
                         onChange={this.handleChange}
-                        value={this.state.form.trabajadores_ocupaciones_meses}
+                        value={this.state.form.meses}
                     />
                 </FormGroup>
             </ModalBody>

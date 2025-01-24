@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import "./searchocupations.css";
+import "./search-formations-ocupations.css";
 
 class SearchOcupations extends Component {
   constructor(props) {
@@ -66,6 +66,7 @@ buildList(items) {
 }
 
 handleResultClick(item) {
+    console.log(item)
     // console.log("paso por handleResultClick!!")
     this.setState({ 
         inputValue: item.descripcion_ocupacion,
@@ -80,10 +81,6 @@ handleResultClick(item) {
     myUlSearch.classList.remove("ulSearch")
     this.buildList([]);
 }
-
-// componentWillUnmount () {
-//     this.props.handleOcupation(this.state.inputValue, this.state.inputIntValue);
-// }
 
 componentDidMount() {
     this.setState({
