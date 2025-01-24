@@ -1,22 +1,20 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusCircle, faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faPlusCircle, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { Table, Button, Container, Modal, ModalHeader, ModalBody, FormGroup, ModalFooter } from "reactstrap";
-// import SearchOcupations from "./search-ocupations";
+// import SearchOcupations from "./search-formations";
 
-class OcupationsWorkers extends Component {
-    constructor(props) {    // Receiving props from CreateEditWorker
+class FormationsWorkers extends Component {
+    constructor(props) {
       super(props); 
-
         this.state = {
             data: [],
             modalUpdate: false,
             modalInsert: false,
             form: {
                 id: "",
-                ocupaciones_id_ocupacion: "",
-                ocupaciones_descripcion_ocupacion: "",
-                trabajadores_ocupaciones_meses: "0",
+                formaciones_id_formacion: "1",
+                formaciones_descripcion_formacion: "",
             },
             inputOcupationIncomplete: true,
         };
@@ -29,52 +27,25 @@ class OcupationsWorkers extends Component {
         this.showUpdateModal = this.showUpdateModal.bind(this);
         this.closeInsertModal = this.closeInsertModal.bind(this);
         this.newIdGenerator = this.newIdGenerator.bind(this);
-        this.checkLength = this.checkLength.bind(this);
         this.validateValues = this.validateValues.bind(this);
+        this.clickFormations = this.clickFormations.bind(this);
     }
 
-checkLength(e){
-    console.log(e);
-    if(e.target.value.length === e.target.maxLength && e.key !== "Tab") {
-        // console.log("maxlength alcanzado");
-        e.stopPropagation();
-        e.preventDefault();
-        if(e.key === "Tab") {
-            if (e.target.value === "") {
-                e.target.value = "0";
-            } else {
-                console.log("pulsado Tab");
-                console.log(e.stopPropagation);
-            return true;
-            }
-        }
-        if(e.key === "Backspace" || e.key === "Delete") {
-            // console.log("backspace o delete pulsado");
-            e.target.value = "";
-        }    
-        return false;
-    }
-    if (e.target.value.length === 1 && (e.key === "Backspace" || e.key === "Delete")) {
-        e.target.value = "0";
-    }
-    if (parseInt(e.target.value) === 0) {
-        return false;
-    }
-    return true;
+clickFormations(e) {
+    console.log("onclick en formations: ",e);
 }
-
-componentDidUpdate () {
+componentDidUpdate() {
     if (this.props.initialEditData) { // If we are Editing a Worker
-            // Adding Line id to work on Ocupations prop modal table, it allows do it¿? it's is supposed props are READ ONLY¿?
+            // Adding Line id to work on Formations prop modal table, it allows do it¿? it's is supposed props are READ ONLY¿?
         this.props.handleInitialEditDataOff();
         console.log("pasando por componentDidUpdate");
         var index = 0;
-        this.props.ocupaciones.forEach(ocupacion => {
-            ocupacion['id'] = index + 1;
+        this.props.formaciones.forEach(formacion => {
+            formacion['id'] = index + 1;
             index +=1;
         });
 
-        const data = this.props.ocupaciones; // Using in Edit Worker item Ocupaciones !!
+        const data = this.props.formaciones; // Using in Edit Worker item Formaciones !!
 //      Passing data from props to data state component
         this.setState({
             data: data
@@ -85,36 +56,22 @@ componentDidUpdate () {
 componentDidMount(){    
     console.log("pasando por componenDidMount");
     this.setState ({
-        data: this.props.ocupaciones
+        data: this.props.formaciones
     });
 }
 
 validateValues(inputValues) {
     debugger
-    if (isNaN(parseInt(inputValues.trabajadores_ocupaciones_meses))) {
-        return ("Introducir meses con un valor correcto.")
-    }
-    if ((parseInt(inputValues.trabajadores_ocupaciones_meses) < 0) ||
-        (parseInt(inputValues.trabajadores_ocupaciones_meses) === 0)) {
-        return ("Valor meses no válido.")
-    }
-    if (inputValues.trabajadores_ocupaciones_meses.length === 2 && inputValues.trabajadores_ocupaciones_meses[0] === "0") {
-        return ("Valor introducido en meses no válido.")
+    if ((inputValues.formaciones_descripcion_formacion == "") || 
+        (parseInt(inputValues.formaciones_id_formacion == ""))) {
+        return ("Formación vacía");
     }
     var repeated = this.state.data.filter(item => {
-        return item.ocupaciones_id_ocupacion === inputValues.ocupaciones_id_ocupacion;
+        console.log("imprimo item.formaciones_id_formacion", item.formaciones_id_formacion);
+        return item.trabajadores_formaciones_id_formacion.toString() === inputValues.formaciones_id_formacion;
     });
-    if (document.querySelector("input#ocupationText.form-control").value === "") {
-        return ("Ocupacion vacía.");
-        // añadir para que que la ocupación se ponga a ""¿?
-    }
-    if ((this.state.inputOcupationIncomplete && !this.props.workerEditMode) || 
-    (inputValues.ocupaciones_descripcion_ocupacion === "")) {
-        return ("Ocupacion incorrecta. Borre Ocupacion y pruebe otra vez.");
-        // añadir para que que la ocupación se ponga a ""¿?
-    }
     if (repeated.length !== 0 && this.state.modalUpdate !== true) {
-        return ("Ocupación ya existente");
+        return ("Formación ya existente");
     }
     return "";
 }
@@ -135,16 +92,18 @@ showInsertModal() {
         modalInsert: true,
         form: {
             id: "",
-            ocupaciones_id_ocupacion: "",
-            ocupaciones_descripcion_ocupacion: "",
-            trabajadores_ocupaciones_meses: "0",
+            formaciones_id_formacion: "",
+            formaciones_descripcion_formacion: "",
+            // formaciones_id_formacion: "1",
+            // formaciones_descripcion_formacion: this.props.formacionesData[0].descripcion_formacion,
         }
+
     });
 }
 
 closeInsertModal() {
     this.setState({ modalInsert: false });
-}
+};
 
 newIdGenerator() {
     if (this.state.data.length >= 1) {
@@ -164,34 +123,33 @@ handleEditRecord(dato) {
     var counter = 0;
     var myArray = this.state.data;
     myArray.forEach((registro) => {
-            if (dato.id === registro.id) {
-            myArray[counter].ocupaciones_id_ocupacion = dato.ocupaciones_id_ocupacion;
-            myArray[counter].ocupaciones_descripcion_ocupacion = this.props.ocupacionesData[dato.ocupaciones_id_ocupacion+1];
-            myArray[counter].trabajadores_ocupaciones_meses = dato.trabajadores_ocupaciones_meses;
+        if (dato.id === registro.id) {
+            myArray[counter].formaciones_id_formacion = dato.formaciones_id_formacion;
+            myArray[counter].formaciones_descripcion_formacion = this.props.formacionesData[dato.formaciones_id_formacion+1];
+            // myArray[counter].ocupaciones_descripcion_ocupacion = this.props.ocupacionesData[dato.ocupaciones_id_ocupacion+1];
         }
         counter+=1;
     });
     this.setState({ data: myArray, modalUpdate: false });
-    this.props.handleUpdateOcupaciones(dato,"edit");
+    this.props.handleUpdateFormaciones(dato,"edit");
     this.setState({
         form: {
             id: "",
-            ocupaciones_id_ocupacion: "",
-            ocupaciones_descripcion_ocupacion: "",
-            trabajadores_ocupaciones_meses: "0",
+            formaciones_id_formacion: "",
+            formaciones_descripcion_formacion: "",
         }
     });
 };
 
 handleDeleteRecord(dato) {
-    var opcion = window.confirm("Estás seguro que deseas Eliminar la ocupacion "+dato.ocupaciones_descripcion_ocupacion);
+    var opcion = window.confirm("Estás seguro que deseas Eliminar la formación "+dato.formaciones_descripcion_formacion);
     if (opcion === true) {
         this.setState({
             data: this.state.data.filter(item => {
-            return item.ocupaciones_id_ocupacion !== dato.ocupaciones_id_ocupacion;
+            return item.formaciones_id_formacion !== dato.formaciones_id_formacion;
             })
         });
-        this.props.handleUpdateOcupaciones(dato,"delete");
+        this.props.handleUpdateFormaciones(dato,"delete");
     }
 };
 
@@ -202,12 +160,12 @@ handleInsertRecord() {
         return ;
     }
     var newValue= {...this.state.form};
-    // Allway override newValue.descripcion_ocupacion due to not possible 
+    // Allway override newValue.descripcion_formacion due to not possible 
     // to start state with props for initial value
-    // if (this.state.data.length === 0 && this.state.form.id_ocupacion === "1") { // It is the first line introduced and id_ocupation was not changed
-    //     newValue.descripcion_ocupacion = this.props.ocupacionesData[0].descripcion_ocupacion
+    // if (this.state.data.length === 0 && this.state.form.id_formacion === "1") { // It is the first line introduced and id_formacion was not changed
+    //     newValue.descripcion_formacion = this.props.formacionesData[0].descripcion_formacion
     // } else {
-    //     newValue.descripcion_ocupacion = this.props.ocupacionesData[newValue.id_ocupacion-1].descripcion_ocupacion
+    //     newValue.descripcion_formacion = this.props.formacionesData[newValue.id_formacion-1].descripcion_formacion
     // }
 
     newValue.id = this.newIdGenerator();
@@ -217,34 +175,50 @@ handleInsertRecord() {
         modalInsert: false,
         data: lista,
      });
-    this.props.handleUpdateOcupaciones(lista,"insert");
+    this.props.handleUpdateFormaciones(lista,"insert");
     this.setState({
         form: {
             id: "",
-            ocupaciones_id_ocupacion: "",
-            ocupaciones_descripcion_ocupacion: "",
-            trabajadores_ocupaciones_meses: "0",
+            formaciones_id_formacion: "",
+            formaciones_descripcion_formacion: "",
         },
     });
 }
 
 handleChange(e) {
-    console.log(e);
-    if (e.target.name === "ocupationText") {
+    // console.log(e);
+    // if (e.target.name === "formationsText") {
+    //     console.log(e);
+    //     this.setState({
+    //         form: {
+    //         ...this.state.form,
+    //         [e.target.name]: e.target.value,
+    //         descripcion_formacion: this.props.formacionesData[e.target.value-1].descripcion_formacion
+    //         }
+    //     });
+    // } else {
+    //     this.setState({
+    //         form: {
+    //         ...this.state.form,
+    //         [e.target.name]: e.target.value,
+    //         },
+    //     });
+    // }
+    if (e.target.name === "formationText") {
         const selectedOption = e.target.value;
         // Encontramos la opción que coincide con el valor seleccionado en el datalist
-        const datalist = document.getElementById('ocupationList');
+        const datalist = document.getElementById('formationList');
         const options = Array.from(datalist.options);
         const selectedOptionElement = options.find(option => option.value === selectedOption);
         if (selectedOptionElement) {
-          const dataIdOcupacion = selectedOptionElement.getAttribute('data-idocupacion');
-          console.log('data-idocupacion:', dataIdOcupacion);
-          // Aquí puedes hacer algo con el valor de data-idocupacion
+          const dataIdFormacion = selectedOptionElement.getAttribute('data-idformacion');
+          console.log('data-idformacion:', dataIdFormacion);
+          // Aquí puedes hacer algo con el valor de data-idFormacion
           this.setState ({
               form: {
                   ...this.state.form,
-                  ocupaciones_descripcion_ocupacion: e.target.value,
-                  ocupaciones_id_ocupacion: dataIdOcupacion
+                  formaciones_descripcion_formacion: e.target.value,
+                  formaciones_id_formacion: dataIdFormacion
                 },
                 inputOcupationIncomplete: false
             });
@@ -264,10 +238,11 @@ handleChange(e) {
 }
 
 render() {
-    const ocupaciones = this.props.ocupacionesData.map((ocupacion => {
+    const formaciones = this.props.formacionesData.map((formacion => {
         return ( 
-            <option key={ocupacion.id_ocupacion} value={ocupacion.descripcion_ocupacion}
-                data-idocupacion={ocupacion.id_ocupacion}/>
+            // <option key={formacion.id_formacion} value={formacion.id_formacion}>{formacion.descripcion_formacion} </option> 
+            <option key={formacion.id_formacion} value={formacion.descripcion_formacion}
+                data-idformacion={formacion.id_formacion}/>
         );
     }));
 
@@ -277,40 +252,30 @@ render() {
             <Button color="success" 
                 disabled={this.props.fieldDisabled}
                 onClick={()=>this.showInsertModal()}
-                title="Crear Ocupaciones"
-            // >Crear
+                title="Crear Formaciones"
             >
                 <FontAwesomeIcon icon={faPlusCircle} />
             </Button>
-            {/* Ocupations  */}
-            Ocupaciones
+            Formaciones
             <Table size="sm">
                 <thead>
                     <tr>
-                        <th>Ocupacion</th>
-                        <th>Meses</th>
+                        <th>Formación</th>
                         <th>Acción</th>
                     </tr>
                 </thead>
 
-                <tbody id="ocupationsTableRows">
+                <tbody id="formationsTableRows">
                     {this.state.data.map((dato) => (
-                        <tr key={dato.ocupaciones_id_ocupacion}>
-                            <td>{dato.ocupaciones_descripcion_ocupacion}</td>
-                            <td>{dato.trabajadores_ocupaciones_meses}</td>
+                        <tr key={dato.formaciones_id_formacion}>
+                            <td>{dato.formaciones_descripcion_formacion}</td>
                             <td>
-                                <Button
-                                    color="primary"
-                                    disabled={this.props.fieldDisabled}
-                                    onClick={() => this.showUpdateModal(dato)}
-                                >
-                                    <FontAwesomeIcon icon={faEdit} />
-                                </Button>{" "}
                                 <Button 
                                     color="danger"
                                     disabled={this.props.fieldDisabled}
                                     onClick={()=> this.handleDeleteRecord(dato)}
                                 >
+                                    {/* Eliminar */}
                                     <FontAwesomeIcon icon={faTrashAlt} />
                                 </Button>
                             </td>
@@ -319,16 +284,16 @@ render() {
                 </tbody>
             </Table>
         </Container>
-            {/* Modal start with autofocus=false to allow autofocus in Id ocupacion */}
+            {/* Modal start with autofocus=false to allow autofocus in Id formacion */}
         <Modal autoFocus={false} isOpen={this.state.modalUpdate}>
             <ModalHeader>
-                <div><h3>Editar Ocupación</h3></div>
+                <div><h3>Editar Formación</h3></div>
             </ModalHeader>
   
             <ModalBody>
-            <FormGroup hidden>
-                <label>
-                        Línea Id:
+                <FormGroup hidden>
+                    <label>
+                        Id:
                     </label>
                     <input
                         className="form-control"
@@ -341,24 +306,21 @@ render() {
               
                 <FormGroup>
                     <label>
-                        Ocupación: {this.state.form.ocupaciones_descripcion_ocupacion}
+                        Formación: {this.state.form.formaciones_descripcion_formacion}
                     </label>
-                </FormGroup>
-                <FormGroup>
-                    <label>
-                        Meses: 
+                    {/* <label>
+                        Formación:
                     </label>
-                    <input
+                    <select
                         className="form-control"
-                        name="trabajadores_ocupaciones_meses"
+                        name="id_formacion"
+                        disabled={true}
                         type="text"
-                        maxLength={3}
-                        min={1} max={999}
-                        required
-                        onKeyDown={e=>this.checkLength(e)}
                         onChange={this.handleChange}
-                        value={this.state.form.trabajadores_ocupaciones_meses}
-                    />
+                        value={this.state.form.id_formacion}
+                    >
+                        {formaciones}
+                    </select> */}
                 </FormGroup>
             </ModalBody>
   
@@ -379,9 +341,10 @@ render() {
             </ModalFooter>
         </Modal>
   
+            {/* Modal start with autofocus=false to allow autofocus in Id formacion */}
         <Modal autoFocus={false} isOpen={this.state.modalInsert}>
             <ModalHeader>
-                <div><h3>Insertar Ocupación</h3></div>
+                <div><h3>Insertar Formación</h3></div>
             </ModalHeader>
 
             <ModalBody>
@@ -401,37 +364,39 @@ render() {
 
                 <FormGroup>
                     <label>
-                        Ocupacion: 
+                        Formación: 
                     </label>
-                    <input type="search" name="ocupationText" id="ocupationText" list="ocupationList"
+                    <input type="search" name="formationText" id="formationText" list="formationList"
                         autoComplete="on"
                         onChange={this.handleChange}
-                        autoFocus="yes"
+                        onClick={this.clickFormations}
                         className="form-control"
-                        placeholder="Clickar, escribir término y seleccione de la lista"
+                        placeholder="Escribir término y seleccione de la lista"
                     />
                     <datalist
-                        id="ocupationList"
+                        id="formationList"
                     >
-                        {ocupaciones}
+                        {formaciones}
                     </datalist>
-                </FormGroup>
 
-                <FormGroup>
-                    <label>
-                        Meses: 
-                    </label>
-                    <input
+                    {/* <SearchOcupations ocupationsData = {this.props.formacionesData}
+                        handleOcupation = {this.handleOcupation}
+                        form = {this.state.form}
+                        handleInputOcupationIncomplete = {this.handleInputOcupationIncomplete}
+                        // inputOcupationIncomplete = {this.state.inputOcupationIncomplete}
+                        // form = {this.state.form}
+                    /> */}
+                    {/* <select
                         className="form-control"
-                        name="trabajadores_ocupaciones_meses"
+                        name="id_formacion"
                         type="number"
-                        maxLength={3}
-                        min={1} max={999}
-                        required
-                        onKeyDown={e=>this.checkLength(e)}
+                        autoFocus={true}
+                        autoComplete="on"
                         onChange={this.handleChange}
-                        value={this.state.form.trabajadores_ocupaciones_meses}
-                    />
+                        value={this.state.form.id_formacion}
+                    >
+                        {formaciones}
+                    </select> */}
                 </FormGroup>
             </ModalBody>
 
@@ -456,4 +421,4 @@ render() {
     }
 }
 
-export default OcupationsWorkers;
+export default FormationsWorkers;

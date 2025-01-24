@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { Table, Button, Container, Modal, ModalHeader, ModalBody, FormGroup, ModalFooter } from "reactstrap";
-// import SearchOcupations from "./search-formations";
+import SearchOcupations from "./search-formations";
 
 class FormationsWorkers extends Component {
     constructor(props) {
@@ -13,10 +13,9 @@ class FormationsWorkers extends Component {
             modalInsert: false,
             form: {
                 id: "",
-                trabajadores_formaciones_id_formacion: "",
-                formaciones_descripcion_formacion: "",
+                id_formacion: "1",
+                descripcion_formacion: "",
             },
-            inputOcupationIncomplete: true,
         };
       
         this.handleDeleteRecord = this.handleDeleteRecord.bind(this);
@@ -28,13 +27,27 @@ class FormationsWorkers extends Component {
         this.closeInsertModal = this.closeInsertModal.bind(this);
         this.newIdGenerator = this.newIdGenerator.bind(this);
         this.validateValues = this.validateValues.bind(this);
-        this.clickFormations = this.clickFormations.bind(this);
+        this.handleOcupation = this.handleOcupation.bind(this); // update ocupation data from SearchOcupations component for submit validation
+        this.handleInputOcupationIncomplete = this.handleInputOcupationIncomplete.bind(this); // handle Ocupation data in SearchOcupations is not completed for submit validation
     }
 
-clickFormations(e) {
-    console.log("onclick en formations: ",e);
+handleInputOcupationIncomplete(value) {
+    this.setState({
+        inputOcupationIncomplete: value
+    })
 }
-componentDidUpdate() {
+
+handleOcupation(descripcion, id) {
+    this.setState({
+        form: {
+        ...this.state.form,
+        ocupaciones_descripcion_ocupacion: descripcion,
+        ocupaciones_id_ocupacion: id
+        },
+    });
+}
+
+componentDidUpdate () {
     if (this.props.initialEditData) { // If we are Editing a Worker
             // Adding Line id to work on Formations prop modal table, it allows do it¿? it's is supposed props are READ ONLY¿?
         this.props.handleInitialEditDataOff();
@@ -61,18 +74,11 @@ componentDidMount(){
 }
 
 validateValues(inputValues) {
-    debugger
-    if ((inputValues.formaciones_descripcion_formacion === "") || 
-        (parseInt(inputValues.trabajadores_formaciones_id_formacion === "")) ||
-        document.querySelector("input#formationText.form-control").value === "") {
-        return ("Formación vacía");
-    }
     var repeated = this.state.data.filter(item => {
-        console.log("imprimo item.trabajadores_formaciones_id_formacion", item.trabajadores_formaciones_id_formacion);
-        return item.trabajadores_formaciones_id_formacion === inputValues.trabajadores_formaciones_id_formacion;
+        return item.id_formacion === inputValues.id_formacion;
     });
     if (repeated.length !== 0 && this.state.modalUpdate !== true) {
-        return ("Formación ya existente");
+        return ("Formacion ya existente");
     }
     return "";
 }
@@ -93,10 +99,8 @@ showInsertModal() {
         modalInsert: true,
         form: {
             id: "",
-            trabajadores_formaciones_id_formacion: "",
-            formaciones_descripcion_formacion: "",
-            // formaciones_id_formacion: "1",
-            // formaciones_descripcion_formacion: this.props.formacionesData[0].descripcion_formacion,
+            id_formacion: "1",
+            descripcion_formacion: this.props.formacionesData[0].descripcion_formacion,
         }
 
     });
@@ -125,9 +129,8 @@ handleEditRecord(dato) {
     var myArray = this.state.data;
     myArray.forEach((registro) => {
         if (dato.id === registro.id) {
-            myArray[counter].trabajadores_formaciones_id_formacion = dato.trabajadores_formaciones_id_formacion;
-            myArray[counter].formaciones_descripcion_formacion = this.props.formacionesData[dato.trabajadores_formaciones_id_formacion+1];
-            // myArray[counter].ocupaciones_descripcion_ocupacion = this.props.ocupacionesData[dato.ocupaciones_id_ocupacion+1];
+            myArray[counter].id_formacion = dato.id_formacion;
+            myArray[counter].descripcion_formacion = this.props.formacionesData[dato.id_formacion+1];
         }
         counter+=1;
     });
@@ -136,18 +139,18 @@ handleEditRecord(dato) {
     this.setState({
         form: {
             id: "",
-            trabajadores_formaciones_id_formacion: "",
-            formaciones_descripcion_formacion: "",
+            id_formacion: "1",
+            descripcion_formacion: this.props.formacionesData[0].descripcion_formacion,
         }
     });
 };
 
 handleDeleteRecord(dato) {
-    var opcion = window.confirm("Estás seguro que deseas Eliminar la formación "+dato.formaciones_descripcion_formacion);
+    var opcion = window.confirm("Estás seguro que deseas Eliminar la formación "+dato.descripcion_formacion);
     if (opcion === true) {
         this.setState({
             data: this.state.data.filter(item => {
-            return item.trabajadores_formaciones_id_formacion !== dato.trabajadores_formaciones_id_formacion;
+            return item.id_formacion !== dato.id_formacion;
             })
         });
         this.props.handleUpdateFormaciones(dato,"delete");
@@ -163,11 +166,11 @@ handleInsertRecord() {
     var newValue= {...this.state.form};
     // Allway override newValue.descripcion_formacion due to not possible 
     // to start state with props for initial value
-    // if (this.state.data.length === 0 && this.state.form.id_formacion === "1") { // It is the first line introduced and id_formacion was not changed
-    //     newValue.descripcion_formacion = this.props.formacionesData[0].descripcion_formacion
-    // } else {
-    //     newValue.descripcion_formacion = this.props.formacionesData[newValue.id_formacion-1].descripcion_formacion
-    // }
+    if (this.state.data.length === 0 && this.state.form.id_formacion === "1") { // It is the first line introduced and id_formacion was not changed
+        newValue.descripcion_formacion = this.props.formacionesData[0].descripcion_formacion
+    } else {
+        newValue.descripcion_formacion = this.props.formacionesData[newValue.id_formacion-1].descripcion_formacion
+    }
 
     newValue.id = this.newIdGenerator();
     var lista= this.state.data;
@@ -180,54 +183,24 @@ handleInsertRecord() {
     this.setState({
         form: {
             id: "",
-            trabajadores_formaciones_id_formacion: "",
-            formaciones_descripcion_formacion: "",
+            id_formacion: "1",
+            descripcion_formacion: this.props.formacionesData[0].descripcion_formacion,
         },
     });
 }
 
 handleChange(e) {
     // console.log(e);
-    // if (e.target.name === "formationsText") {
-    //     console.log(e);
-    //     this.setState({
-    //         form: {
-    //         ...this.state.form,
-    //         [e.target.name]: e.target.value,
-    //         descripcion_formacion: this.props.formacionesData[e.target.value-1].descripcion_formacion
-    //         }
-    //     });
-    // } else {
-    //     this.setState({
-    //         form: {
-    //         ...this.state.form,
-    //         [e.target.name]: e.target.value,
-    //         },
-    //     });
-    // }
-    if (e.target.name === "formationText") {
-        const selectedOption = e.target.value;
-        // Encontramos la opción que coincide con el valor seleccionado en el datalist
-        const datalist = document.getElementById('formationList');
-        const options = Array.from(datalist.options);
-        const selectedOptionElement = options.find(option => option.value === selectedOption);
-        if (selectedOptionElement) {
-          const dataIdFormacion = selectedOptionElement.getAttribute('data-idformacion');
-          console.log('data-idformacion:', dataIdFormacion);
-          // Aquí puedes hacer algo con el valor de data-idFormacion
-          this.setState ({
-              form: {
-                  ...this.state.form,
-                  formaciones_descripcion_formacion: e.target.value,
-                  trabajadores_formaciones_id_formacion: dataIdFormacion
-                },
-                inputOcupationIncomplete: false
-            });
-        } else {
-            this.setState({ inputOcupationIncomplete: true }); 
-        }
+    if (e.target.name === "id_formacion") {
+        console.log(e);
+        this.setState({
+            form: {
+            ...this.state.form,
+            [e.target.name]: e.target.value,
+            descripcion_formacion: this.props.formacionesData[e.target.value-1].descripcion_formacion
+            }
+        });
     } else {
-        
         this.setState({
             form: {
             ...this.state.form,
@@ -235,15 +208,12 @@ handleChange(e) {
             },
         });
     }
-
 }
 
 render() {
     const formaciones = this.props.formacionesData.map((formacion => {
         return ( 
-            // <option key={formacion.id_formacion} value={formacion.id_formacion}>{formacion.descripcion_formacion} </option> 
-            <option key={formacion.id_formacion} value={formacion.descripcion_formacion}
-                data-idformacion={formacion.id_formacion}/>
+            <option key={formacion.id_formacion} value={formacion.id_formacion}>{formacion.descripcion_formacion} </option> 
         );
     }));
 
@@ -268,8 +238,8 @@ render() {
 
                 <tbody id="formationsTableRows">
                     {this.state.data.map((dato) => (
-                        <tr key={dato.trabajadores_formaciones_id_formacion}>
-                            <td>{dato.formaciones_descripcion_formacion}</td>
+                        <tr key={dato.id}>
+                            <td>{dato.descripcion_formacion}</td>
                             <td>
                                 <Button 
                                     color="danger"
@@ -307,9 +277,6 @@ render() {
               
                 <FormGroup>
                     <label>
-                        Formación: {this.state.form.formaciones_descripcion_formacion}
-                    </label>
-                    {/* <label>
                         Formación:
                     </label>
                     <select
@@ -321,7 +288,7 @@ render() {
                         value={this.state.form.id_formacion}
                     >
                         {formaciones}
-                    </select> */}
+                    </select>
                 </FormGroup>
             </ModalBody>
   
@@ -367,19 +334,6 @@ render() {
                     <label>
                         Formación: 
                     </label>
-                    <input type="search" name="formationText" id="formationText" list="formationList"
-                        autoComplete="on"
-                        onChange={this.handleChange}
-                        onClick={this.clickFormations}
-                        className="form-control"
-                        placeholder="Escribir término y seleccione de la lista"
-                    />
-                    <datalist
-                        id="formationList"
-                    >
-                        {formaciones}
-                    </datalist>
-
                     {/* <SearchOcupations ocupationsData = {this.props.formacionesData}
                         handleOcupation = {this.handleOcupation}
                         form = {this.state.form}
@@ -387,7 +341,7 @@ render() {
                         // inputOcupationIncomplete = {this.state.inputOcupationIncomplete}
                         // form = {this.state.form}
                     /> */}
-                    {/* <select
+                    <select
                         className="form-control"
                         name="id_formacion"
                         type="number"
@@ -397,7 +351,7 @@ render() {
                         value={this.state.form.id_formacion}
                     >
                         {formaciones}
-                    </select> */}
+                    </select>
                 </FormGroup>
             </ModalBody>
 

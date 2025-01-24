@@ -31,7 +31,7 @@ class ListWorkers extends Component {
 handleUpdateListWorkers(id) {
     this.setState({
         workerItems: this.state.workerItems.filter(item => {
-          return item.id !== id;
+          return item.trabajadores_id_trabajador !== id;
         })
       });
 }
@@ -65,7 +65,7 @@ componentDidMount(){
    
 render() {
     const dataRecords = this.state.workerItems.map(workerItem => {
-        return <ListWorkersItem key={workerItem.id} 
+        return <ListWorkersItem key={workerItem.trabajadores_id_trabajador} 
                 workerItem={workerItem} handleUpdateListWorkers = {this.handleUpdateListWorkers}
                 hostAPP = {this.props.hostAPP} />
     });
