@@ -241,7 +241,6 @@ handleChange(e) {
 render() {
     const formaciones = this.props.formacionesData.map((formacion => {
         return ( 
-            // <option key={formacion.id_formacion} value={formacion.id_formacion}>{formacion.descripcion_formacion} </option> 
             <option key={formacion.id_formacion} value={formacion.descripcion_formacion}
                 data-idformacion={formacion.id_formacion}/>
         );
@@ -269,7 +268,10 @@ render() {
                 <tbody id="formationsTableRows">
                     {this.state.data.map((dato) => (
                         <tr key={dato.trabajadores_formaciones_id_formacion}>
-                            <td>{dato.formaciones_descripcion_formacion}</td>
+                            <td title={dato.formaciones_descripcion_formacion}
+                            >
+                                {dato.formaciones_descripcion_formacion}
+                            </td>
                             <td>
                                 <Button 
                                     color="danger"

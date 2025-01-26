@@ -296,7 +296,9 @@ render() {
                 <tbody id="ocupationsTableRows">
                     {this.state.data.map((dato) => (
                         <tr key={dato.ocupaciones_id_ocupacion}>
-                            <td>{dato.ocupaciones_descripcion_ocupacion}</td>
+                            <td title={dato.ocupaciones_descripcion_ocupacion}
+                            >
+                                {dato.ocupaciones_descripcion_ocupacion}</td>
                             <td>{dato.trabajadores_ocupaciones_meses}</td>
                             <td>
                                 <Button
